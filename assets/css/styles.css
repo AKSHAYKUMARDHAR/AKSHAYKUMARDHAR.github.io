@@ -330,7 +330,7 @@ h2 .muted-sm { display: block; margin-top: 8px; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 18px; }
 .filter { border: 1px solid var(--border); background: var(--surface); border-radius: 999px; padding: 7px 14px; font-size: 14px; cursor: pointer; color: var(--muted); }
 .filter[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
-.projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; grid-auto-flow: row dense; }
 .project { padding: 20px; display: flex; flex-direction: column; gap: 10px; transition: transform .2s ease, border-color .2s ease; }
 .project:hover { transform: translateY(-3px); border-color: var(--border-strong); }
 .project.featured { grid-column: span 2; border-color: color-mix(in srgb, var(--emerald) 45%, var(--border)); background: linear-gradient(160deg, var(--emerald-soft), transparent 55%), var(--surface); }
