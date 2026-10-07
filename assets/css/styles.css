@@ -341,6 +341,7 @@ h2 .muted-sm { display: block; margin-top: 8px; }
 .project p { margin: 0; color: var(--muted); font-size: 14.5px; flex: 1; }
 .project a.repo { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 14px; color: var(--indigo); text-decoration: none; }
 .project a.repo:hover { text-decoration: underline; }
+.project .links { display: flex; flex-wrap: wrap; gap: 18px; }
 .project[hidden] { display: none; }
 
 /* Skills */

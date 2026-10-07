@@ -368,7 +368,10 @@
         '<div class="ctx">' + esc(p.context) + (p.date ? " · " + esc(p.date) : "") + "</div>" +
         "<p>" + esc(p.text) + "</p>" +
         '<div class="chips">' + p.tags.map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; }).join("") + "</div>" +
-        '<a class="repo" href="' + esc(p.link) + '" target="_blank" rel="noopener">' + icon("github") + "View on GitHub</a>" +
+        '<div class="links">' +
+          (p.demo ? '<a class="repo" href="' + esc(p.demo) + '" target="_blank" rel="noopener">' + icon("external") + "Try it live</a>" : "") +
+          '<a class="repo" href="' + esc(p.link) + '" target="_blank" rel="noopener">' + icon("github") + "View on GitHub</a>" +
+        "</div>" +
         "</article>";
     }).join("");
     $("#filters").addEventListener("click", function (e) {

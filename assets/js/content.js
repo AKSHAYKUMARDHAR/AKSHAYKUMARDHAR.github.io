@@ -197,7 +197,7 @@ window.CONTENT = {
     { featured: true, title: "Is This a Scam? Multilingual scam checker for India", context: "Personal project, PRD to release gate", date: "Oct 2026",
       text: "Paste a message, upload a screenshot or describe a call, in Hindi, Bengali or English, and get one of three verdicts that never says \"safe\". Rules decide what is always fraud, two LLM runs must agree on the rest, and an injection guard sits outside the model. On 200 never-seen messages: 0 false alarms on 100 genuine, 0 of 80 scams cleared. The release gate still blocked launch: only 50% of ambiguous messages got \"can't tell\" (target 70%).",
       tags: ["LLM", "Multilingual NLP", "Evals", "Abstention", "Prompt injection", "FastAPI", "PRD"], cats: ["NLP", "ML"],
-      link: "https://github.com/AKSHAYKUMARDHAR/Is-This-A-Scam" },
+      link: "https://github.com/AKSHAYKUMARDHAR/Is-This-A-Scam", demo: "https://is-this-a-scam.onrender.com" },
     { featured: true, title: "UPI Transaction Triage Agent", context: "Personal project", date: "Oct 2026",
       text: "An LLM agent that categorizes Indian UPI bank-statement transactions: a confidence-gated baseline, an agent calling MCP tools, RAG merchant lookup on pgvector, a human review queue and an n8n trigger. 98.0% precision on never-seen rows.",
       tags: ["LLM agents", "MCP", "RAG", "pgvector", "FastAPI", "n8n", "Evals"], cats: ["AI agents", "NLP", "ML"],
