@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case study: Is This a Scam? | Akshay Dhar</title>
+  <meta name="description" content="Case study: a scam checker for India in Hindi, Bengali and English that says 'can't tell' instead of guessing, released only through an evaluation gate.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">AD</span><span class="brand-name">Akshay Dhar</span></a>
+      <div class="nav-actions push">
+        <a class="btn btn-ghost btn-sm" href="../index.html#projects">All projects</a>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap cs-main">
+    <a class="cs-back" href="../index.html#projects">← Back to portfolio</a>
+    <p class="eyebrow">Case study · Personal project · Oct 2026</p>
+    <h1 class="cs-title">Is This a Scam?</h1>
+    <p class="cs-sub">A scam checker for India in Hindi, Bengali and English that says "can't tell" instead of guessing.</p>
+    <p class="print-only muted-sm">Akshay Dhar · akshaykumardhar14@gmail.com · is-this-a-scam.onrender.com · github.com/AKSHAYKUMARDHAR/Is-This-A-Scam</p>
+
+    <div class="cs-links">
+      <a class="btn btn-primary btn-sm" href="https://is-this-a-scam.onrender.com" target="_blank" rel="noopener">Try it live</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Is-This-A-Scam/blob/main/docs/PRD.md" target="_blank" rel="noopener">Read the PRD</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Is-This-A-Scam" target="_blank" rel="noopener">Code on GitHub</a>
+      <a class="btn btn-ghost btn-sm" href="../assets/files/case-study-scam-checker.pdf" target="_blank" rel="noopener">Download PDF</a>
+    </div>
+
+    <div class="card cs-meta">
+      <div><h4>My role</h4><p>Solo: research, PRD, evaluation design and the build, with Claude Code.</p></div>
+      <div><h4>When</h4><p>Oct 2026</p></div>
+      <div><h4>Stack</h4><p>Python, FastAPI, Gemini (free tier) or Claude, vanilla JS, Docker, Render</p></div>
+    </div>
+
+    <div class="cs-stats">
+      <div class="pstat"><b>0 / 100</b><span>false alarms on never-seen genuine messages</span></div>
+      <div class="pstat"><b>80 / 80</b><span>never-seen scams caught, none cleared</span></div>
+      <div class="pstat"><b>0 / 50</b><span>prompt-injection attacks that changed a verdict</span></div>
+      <div class="pstat warn"><b>Blocked</b><span>launch, by my own gate: ambiguous messages 50% vs 70%</span></div>
+    </div>
+
+    <section class="cs-sec">
+      <h2>The problem</h2>
+      <p>Indians lost <strong>₹19,813 crore to cyber fraud in 2025</strong>, and 77% of it went to fake investment schemes (I4C data). Telecom and inbox filters act silently, and only on what they are sure about. What gets through is the ambiguous message or call a person is staring at, wondering "is this real?" Nobody gives that person a clear, explained answer in their own language.</p>
+      <p>The market is crowded: Airtel and Google screen billions of messages, and Truecaller and WhatsApp are adding scam checks. So the product can't win on detection volume. It wins on three things no checker I reviewed combines: <strong>honest uncertainty</strong>, <strong>coverage of investment pitches and phone calls</strong> (the scams behind 85% of losses, which link filters rarely see), and <strong>Bengali</strong> alongside Hindi and English.</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>The unsure recipient</strong>, often 45 to 70, who gets a "your KYC expires today" SMS or a caller claiming to be police.</li>
+        <li><strong>The family guardian</strong> who handles a parent's phone safety and shares answers into family WhatsApp groups. They are the growth channel.</li>
+        <li><strong>The targeted investor</strong> added to a "stock tips" group, the 77%-of-losses case.</li>
+        <li><strong>The small shopkeeper</strong> shown a "payment successful" screenshot, where the right answer is "a screenshot can never prove payment".</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What I built</h2>
+      <p>A mobile-first web app with no login. Paste a message, upload a screenshot, or answer five questions about a call, and get one of three verdicts: <strong>Likely scam</strong>, <strong>Can't tell, verify it yourself</strong>, or <strong>No scam signs found</strong>. It never says "safe".</p>
+      <div class="flow">
+        <div class="flow-step"><b>Input</b><small>message, screenshot or call answers</small></div>
+        <div class="flow-step k-gate"><b>Rules + injection guard</b><small>11 hard rules decide what is always fraud</small></div>
+        <div class="flow-step"><b>Masking</b><small>card, account, ID, phone and OTP numbers hidden</small></div>
+        <div class="flow-step k-agent"><b>2 model runs</b><small>must agree, or the answer is "can't tell"</small></div>
+        <div class="flow-step k-ok"><b>Verdict card</b><small>red flags quoted from the message, fixed next steps</small></div>
+      </div>
+      <div class="shot">
+        <img src="../assets/img/app-scam-hi.png" alt="A Hindi verdict card: Likely scam, with red flags quoted from the message and next steps" loading="lazy">
+        <img src="../assets/img/app-unsure-en.png" alt="An English 'Can't tell' card that explains a short link and how to check safely" loading="lazy">
+        <img src="../assets/img/app-call-bn.png" alt="The five phone-call questions in Bengali" loading="lazy">
+      </div>
+      <p style="margin-top:14px">Also in the product: an "I already paid" button that goes straight to the 1930 helpline steps, a WhatsApp share card that never includes the original message, a verdict-first vs explanation-first A/B split, feedback buttons, and an event log that stores no message text.</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Product decisions</h2>
+      <ul>
+        <li><strong>Three verdicts, never "safe".</strong> One wrong "scam" on a genuine bank message costs more trust than ten honest "can't tell" answers.</li>
+        <li><strong>Rules decide the cases that are always fraud.</strong> Banks never ask for an OTP, and you never need a PIN to receive money. Every hard rule is tested against genuine look-alikes: OTP messages that say "do not share", delivery OTPs you <em>do</em> give the agent, police advisories about digital arrest.</li>
+        <li><strong>Self-consistency instead of self-reported confidence.</strong> Two runs must agree. The PRD planned three; the golden set showed the third never changed a verdict (128 of 128), so I cut it and saved a third of the cost.</li>
+        <li><strong>The injection guard sits outside the model</strong>, a lesson from my UPI agent, where a system prompt alone did not stop an injection.</li>
+        <li><strong>Advice is never generated.</strong> Next steps, numbers and links are fixed templates in three languages; the model's quotes are checked against the message and dropped if they don't appear.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>How I tested it</h2>
+      <p>I froze a 200-message held-out set in git <strong>before writing any rule or prompt</strong>, tuned on a separate 200-message golden set, and ran the held-out set once, on the frozen configuration. 80 scams, 100 genuine messages (35 of them alarming look-alikes) and 20 ambiguous ones, in Hindi, Bengali and English, including Hindi and Bengali typed in Latin script.</p>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Version</th><th>False alarms</th><th>Scams cleared</th><th>Scams caught</th><th>Ambiguous → can't tell</th></tr></thead>
+        <tbody>
+          <tr><td>A · Rules only</td><td>0 / 100</td><td>0 / 80</td><td>47.5%</td><td>95%</td></tr>
+          <tr><td>B · Rules + 1 model run</td><td>1 / 100</td><td>0 / 80</td><td>100%</td><td>50%</td></tr>
+          <tr class="hl"><td>C · Rules + 2 runs (shipped)</td><td>0 / 100</td><td>0 / 80</td><td>100%</td><td>50%</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Release gate</h3>
+      <ul class="checklist">
+        <li>False alarms ≤ 2% of genuine messages: 0 of 100</li>
+        <li>Scams cleared ≤ 5%: 0 of 80</li>
+        <li>Scam type correct ≥ 85%: 96.2%</li>
+        <li>No language with more than 2 false alarms: 0 in each</li>
+        <li>Prompt-injection suite, zero verdict flips: 0 of 50</li>
+        <li class="fail">Ambiguous messages get "can't tell" ≥ 70%: 50%</li>
+        <li class="pending">Native-speaker review of the explanations: pending</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What failed, and what's next</h2>
+      <div class="callout callout-amber"><strong>My own gate blocked the launch.</strong> The model is too sure on first-contact messages with no request yet ("Maa, this is my new number, save it", "a complaint is registered, press 9"), calling them scams with 0.85 to 0.95 confidence. A wrong "scam" does less harm than a wrong "safe", but it is exactly the miscalibration the gate exists to catch. So the live site stays a demo, not a launched product, until a fix passes on fresh messages.</div>
+      <p style="margin-top:16px">The next iteration follows the PRD: tune the prompt on the golden set so first-contact messages are "can't tell" unless they ask for money, secrets or an app; write 50 fresh held-out messages before tuning; and re-run the gate. Collecting real, consented messages is the step after that.</p>
+      <h3>What I learned</h3>
+      <ul>
+        <li>A held-out set frozen before the rules is what makes the numbers worth trusting.</li>
+        <li>Measure the expensive part. The third model run looked prudent and did nothing.</li>
+        <li>Free tiers shape evaluation plans: 500 requests a day per model decided how much I could test, and in what order.</li>
+      </ul>
+    </section>
+
+    <p class="cs-note">The test messages are hand-written, modelled on publicly reported scam patterns and real message formats; results on real messages may differ. Every number comes from a logged run in the repo.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Akshay Dhar</span>
+      <a href="../index.html">Back to portfolio</a>
+    </div>
+  </footer>
+  <script src="../assets/js/page.js"></script>
+</body>
+</html>

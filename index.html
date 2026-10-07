@@ -35,15 +35,14 @@
     <div class="wrap nav-inner">
       <a class="brand" href="#top" aria-label="Akshay Dhar, back to top"><span class="brand-mark">AD</span><span class="brand-name">Akshay Dhar</span></a>
       <nav class="nav-links" id="navLinks" aria-label="Sections">
-        <a href="#about">About</a>
-        <a href="#case">Case study</a>
-        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
         <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </nav>
       <div class="nav-actions">
-        <button class="icon-btn kbd-btn" id="paletteBtn" type="button" aria-label="Open quick search (Ctrl or Cmd + K)"><span data-icon="search"></span><kbd class="hide-sm">Ctrl K</kbd></button>
         <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme"><span data-icon="theme"></span></button>
         <a class="btn btn-primary btn-sm hide-sm" id="navCv" href="#" target="_blank" rel="noopener"><span data-icon="download"></span>CV</a>
         <button class="icon-btn show-sm" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span data-icon="menu"></span></button>
@@ -54,26 +53,17 @@
   <main id="main">
     <!-- HERO -->
     <section class="hero" aria-labelledby="heroTitle">
-      <div class="wrap hero-grid">
+      <div class="wrap">
         <div class="hero-copy">
           <p class="avail reveal"><span class="dot" aria-hidden="true"></span><span id="availText"></span></p>
           <p class="kicker reveal" id="roleLine"></p>
           <h1 id="heroTitle" class="reveal"></h1>
           <p class="lead reveal" id="heroSub"></p>
           <div class="cta-row reveal">
-            <a class="btn btn-primary" href="#case">See the case study<span data-icon="arrow"></span></a>
+            <a class="btn btn-primary" href="#projects">See my projects<span data-icon="arrow"></span></a>
             <a class="btn btn-ghost" id="heroCv" href="#" target="_blank" rel="noopener"><span data-icon="download"></span>Download CV</a>
           </div>
           <div class="social-row reveal" id="heroSocial"></div>
-          <p class="hint reveal">Press <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd> to jump anywhere</p>
-        </div>
-        <div class="hero-visual reveal">
-          <div class="terminal" role="figure" aria-labelledby="termCaption">
-            <div class="term-bar"><span></span><span></span><span></span><b>decision-log · UPI Triage Agent</b></div>
-            <ol class="term-body" id="termBody" aria-live="off"></ol>
-            <div class="term-foot"><span id="termSummary"></span><button class="link-btn" id="termReplay" type="button">Replay</button></div>
-          </div>
-          <p class="fig-caption" id="termCaption">Real cases from the agent's evaluation, on synthetic data.</p>
         </div>
       </div>
     </section>
@@ -83,98 +73,26 @@
       <div class="wrap metrics" id="metrics"></div>
     </section>
 
-    <!-- ABOUT -->
-    <section class="section" id="about" aria-labelledby="aboutTitle">
+    <!-- WORK CASE STUDY -->
+    <section class="section" id="work" aria-labelledby="workTitle">
       <div class="wrap">
-        <p class="eyebrow">About</p>
-        <h2 id="aboutTitle" class="reveal">From analysing data to owning AI in production</h2>
-        <div class="about-grid">
-          <div class="about-text reveal" id="aboutText"></div>
-          <div class="principles" id="principles"></div>
-        </div>
+        <p class="eyebrow">Work</p>
+        <h2 id="workTitle" class="reveal">Case study from my last role</h2>
+        <div id="workCard"></div>
       </div>
     </section>
 
-    <!-- CASE STUDY -->
-    <section class="section case" id="case" aria-labelledby="caseTitle">
+    <!-- PROJECTS -->
+    <section class="section" id="projects" aria-labelledby="projTitle">
       <div class="wrap">
-        <p class="eyebrow">Featured case study</p>
-        <h2 id="caseTitle" class="reveal"></h2>
-        <p class="lead narrow reveal" id="caseSub"></p>
-
-        <!-- Part 1 -->
-        <div class="part">
-          <p class="part-kicker" id="p1Kicker"></p>
-          <h3 class="part-title" id="p1Title"></h3>
-          <div class="problem-grid">
-            <div class="reveal" id="p1Problem"></div>
-            <aside class="card role-card reveal">
-              <h4>My role</h4>
-              <p id="p1Role"></p>
-              <div class="chips" id="p1Stack"></div>
-            </aside>
-          </div>
-
-          <h4 class="block-title">How the engine works <span class="muted-sm">click a stage</span></h4>
-          <div class="pipeline" id="pipe1" role="tablist" aria-label="Catalysk pipeline stages"></div>
-          <div class="stage-panel" id="pipe1Panel" role="tabpanel" aria-live="polite"></div>
-
-          <h4 class="block-title">Six product calls that made it work</h4>
-          <div class="calls" id="calls"></div>
-
-          <div class="callout callout-amber reveal">
-            <strong>Guarding against silent failure.</strong> <span id="silentFailure"></span>
-          </div>
-        </div>
-
-        <!-- Part 2 -->
-        <div class="part">
-          <p class="part-kicker" id="p2Kicker"></p>
-          <h3 class="part-title" id="p2Title"></h3>
-          <p class="narrow reveal" id="p2Intro"></p>
-
-          <h4 class="block-title">Architecture <span class="muted-sm">click a stage</span></h4>
-          <div class="pipeline" id="pipe2" role="tablist" aria-label="Agent architecture stages"></div>
-          <div class="stage-panel" id="pipe2Panel" role="tabpanel" aria-live="polite"></div>
-          <p class="muted-sm ops" id="p2Ops"></p>
-
-          <h4 class="block-title">Results explorer</h4>
-          <div class="card results" id="results">
-            <div class="results-head">
-              <div class="tabs" role="tablist" aria-label="Test set" id="resultTabs"></div>
-              <button class="link-btn" id="tableToggle" type="button" aria-pressed="false">View as table</button>
-            </div>
-            <div class="legend" aria-hidden="true">
-              <span><i class="sw sw-a"></i>A · baseline</span>
-              <span><i class="sw sw-b"></i>B · + agent</span>
-              <span><i class="sw sw-c"></i>C · + agent + RAG</span>
-            </div>
-            <div id="resultsBody" aria-live="polite"></div>
-            <p class="muted-sm" id="resultsCaption"></p>
-            <div class="footnotes muted-sm" id="footnotes"></div>
-            <p class="muted-sm" id="resultsNote"></p>
-          </div>
-          <p class="takeaway reveal" id="takeaway"></p>
-
-          <h4 class="block-title">Walk a transaction through the system</h4>
-          <p class="muted-sm tight">Real examples from the evaluation, synthetic data. Pick one.</p>
-          <div class="walk" id="walk">
-            <div class="walk-list" id="walkList" role="tablist" aria-label="Example transactions"></div>
-            <div class="card walk-stage" role="tabpanel" id="walkPanel" aria-live="polite">
-              <div class="walk-map" id="walkMap"></div>
-              <div class="walk-compare" id="walkCompare"></div>
-            </div>
-          </div>
-
-          <div class="two-col">
-            <div class="callout callout-amber reveal"><strong>Two bugs the held-out set caught.</strong> <span id="bugs"></span></div>
-            <div class="callout callout-indigo reveal"><strong>The gate is a policy decision.</strong> <span id="gate"></span></div>
-          </div>
-
-          <div class="cta-row center">
-            <a class="btn btn-primary" id="caseCta" href="#" target="_blank" rel="noopener"><span data-icon="file"></span>Read the 2-page case study (PDF)</a>
-            <a class="btn btn-ghost" id="repoCta" href="#" target="_blank" rel="noopener"><span data-icon="github"></span>View the code on GitHub</a>
-          </div>
+        <p class="eyebrow">Projects</p>
+        <h2 id="projTitle" class="reveal">AI products I've built</h2>
+        <p class="section-lead reveal">Personal projects, built end to end with Claude Code. Each has a PRD, a case study and the code.</p>
+        <div class="pgrid" id="projectGrid"></div>
+        <div class="earlier reveal">
+          <h3>Earlier projects</h3>
+          <p class="muted-sm">Data science and ML work from my MSc and before.</p>
+          <ul class="elist" id="earlierList"></ul>
         </div>
       </div>
     </section>
@@ -183,18 +101,20 @@
     <section class="section" id="experience" aria-labelledby="expTitle">
       <div class="wrap">
         <p class="eyebrow">Experience</p>
-        <h2 id="expTitle" class="reveal">Where I've shipped</h2>
+        <h2 id="expTitle" class="reveal">Where I've worked</h2>
         <ol class="timeline" id="timeline"></ol>
       </div>
     </section>
 
-    <!-- PROJECTS -->
-    <section class="section" id="projects" aria-labelledby="projTitle">
+    <!-- ABOUT -->
+    <section class="section" id="about" aria-labelledby="aboutTitle">
       <div class="wrap">
-        <p class="eyebrow">Projects</p>
-        <h2 id="projTitle" class="reveal">Built, measured, published</h2>
-        <div class="filters" id="filters" role="group" aria-label="Filter projects"></div>
-        <div class="projects" id="projectGrid"></div>
+        <p class="eyebrow">About</p>
+        <h2 id="aboutTitle" class="reveal">How I work</h2>
+        <div class="about-grid">
+          <div class="about-text reveal" id="aboutText"></div>
+          <div class="principles" id="principles"></div>
+        </div>
       </div>
     </section>
 
@@ -240,18 +160,6 @@
       <a href="#top">Back to top ↑</a>
     </div>
   </footer>
-
-  <!-- Command palette -->
-  <div class="palette-backdrop" id="palette" hidden>
-    <div class="palette" role="dialog" aria-modal="true" aria-label="Quick search">
-      <div class="palette-input">
-        <span data-icon="search"></span>
-        <input id="paletteInput" type="text" placeholder="Jump to a section or action…" autocomplete="off" aria-controls="paletteList" aria-activedescendant="">
-        <kbd>Esc</kbd>
-      </div>
-      <ul class="palette-list" id="paletteList" role="listbox" aria-label="Results"></ul>
-    </div>
-  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case study: Catalysk transaction categorization | Akshay Dhar</title>
+  <meta name="description" content="Work case study: an AI transaction categorization engine that cut uncategorized transactions from 39% to 13% without trading away precision.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">AD</span><span class="brand-name">Akshay Dhar</span></a>
+      <div class="nav-actions push">
+        <a class="btn btn-ghost btn-sm" href="../index.html#work">All work</a>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap cs-main">
+    <a class="cs-back" href="../index.html#work">← Back to portfolio</a>
+    <p class="eyebrow">Work case study · Catalysk · Apr - Sep 2026</p>
+    <h1 class="cs-title">Categorize more, without trading away precision</h1>
+    <p class="cs-sub">An AI transaction categorization engine behind client ESG reporting, gated on confidence and released only when it passed an evaluation.</p>
+    <p class="print-only muted-sm">Akshay Dhar · akshaykumardhar14@gmail.com · akshaykumardhar.github.io</p>
+
+    <div class="cs-links">
+      <a class="btn btn-primary btn-sm" href="../assets/files/case-study-catalysk.pdf" target="_blank" rel="noopener">Download PDF</a>
+    </div>
+
+    <div class="card cs-meta">
+      <div><h4>My role</h4><p>Data Consultant. Architected and led the build with a small team, and owned the engine from design through production.</p></div>
+      <div><h4>When</h4><p>Apr - Sep 2026</p></div>
+      <div><h4>Stack</h4><p>Python, SQL/PostgreSQL, SBERT (MiniLM, E5, BGE), YAML configs, Metabase</p></div>
+    </div>
+
+    <div class="cs-stats">
+      <div class="pstat"><b>39% → 13%</b><span>uncategorized transactions</span></div>
+      <div class="pstat"><b>+5 pts</b><span>category accuracy from an embedding bake-off</span></div>
+      <div class="pstat"><b>21 → 36</b><span>categories, zero golden-set regression</span></div>
+      <div class="pstat"><b>Days → hours</b><span>to onboard a new banking partner</span></div>
+    </div>
+
+    <section class="cs-sec">
+      <h2>The problem</h2>
+      <p>At Catalysk (AI sustainability analytics, Bengaluru), bank-statement transactions feed client ESG reporting, and <strong>39% of transactions landed uncategorized</strong>. Every uncategorized row is manual analyst work. Every wrongly categorized row is an error in a client's report.</p>
+      <p>So the goal was never "categorize more". It was <strong>categorize more without trading away precision</strong>, and prove it before each release.</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>How the engine works</h2>
+      <div class="flow">
+        <div class="flow-step"><b>Ingest</b><small>CSV, Excel, JSON and REST through one contract</small></div>
+        <div class="flow-step"><b>Rules</b><small>keyword and rule matching for the clear cases</small></div>
+        <div class="flow-step"><b>Merchant extraction</b><small>who was paid</small></div>
+        <div class="flow-step"><b>SBERT fallback</b><small>semantic match for the rest</small></div>
+        <div class="flow-step k-gate"><b>Confidence gate</b><small>~84%: below it, the model abstains</small></div>
+        <div class="flow-step k-ok"><b>Auto-categorize</b><small>or route to analyst review</small></div>
+      </div>
+      <p>An evaluation harness, a 388-row UAT golden set plus a 1,400-row benchmark across 7 bank statements, gates every model and taxonomy change. An 18-table PostgreSQL observability layer with live Metabase dashboards replaced manual Excel review.</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Six product calls that made it work</h2>
+      <div class="calls">
+        <div class="card call"><h4>Define "good" before building</h4><p>Built the release bar first: a 388-row UAT golden set and a 1,400-row benchmark across 7 bank statements. No model or taxonomy change shipped without passing it.</p><div class="res">21 → 36 categories (10K → 17K training examples), zero golden-set regression</div></div>
+        <div class="card call"><h4>Precision over vanity coverage</h4><p>Gated auto-categorization at ~84% model confidence. Below the gate, the model abstains and the row goes to an analyst instead of into a client report.</p><div class="res">Uncertain rows get human review, not a guess</div></div>
+        <div class="card call"><h4>Pick models on evidence, not reputation</h4><p>Ran an embedding bake-off (MiniLM, E5, BGE) against the golden set, and rejected a slower model that only looked better on paper.</p><div class="res">+5 points category accuracy</div></div>
+        <div class="card call"><h4>Go after the misses</h4><p>Redesigned the categorization logic for UPI (VPA) and person-to-person (P2P) payments.</p><div class="res">Uncategorized 39% → 13%</div></div>
+        <div class="card call"><h4>Make it fast enough to use</h4><p>Removed per-row regex recompilation and redundant set rebuilds, and added embedding caching.</p><div class="res">Hours → minutes per 1,000 rows, zero change to output</div></div>
+        <div class="card call"><h4>Make it self-serve for non-engineers</h4><p>Config-driven YAML rules analysts edit without engineering, plus live Metabase dashboards replacing manual Excel review.</p><div class="res">Partner onboarding from days to hours</div></div>
+      </div>
+      <div class="callout callout-amber"><strong>Guarding against silent failure.</strong> When a catch-all bucket swelled to ~30% of volume, I traced it to a silent regression that had disabled the SBERT model and 4 downstream stages without raising an error, and recovered it. I also shipped 90+ automated data quality checks across 5 financial schemas, catching silent bad data before it reaches the model.</div>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What I took from it</h2>
+      <ol>
+        <li><strong>Write the eval before the feature.</strong> The golden set and benchmark were the spec and the release bar.</li>
+        <li><strong>Measure precision on what the AI does alone.</strong> Automation without precision just moves the work downstream.</li>
+        <li><strong>Let the model abstain.</strong> The gate keeps analysts on the rows that need judgment.</li>
+        <li><strong>Watch for silent failure.</strong> A model that quietly switches off looks like a data problem until you trace it.</li>
+      </ol>
+    </section>
+
+    <p class="cs-note">Figures are from production work at Catalysk (Apr - Sep 2026). No client data or code is shown.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Akshay Dhar</span>
+      <a href="../index.html">Back to portfolio</a>
+    </div>
+  </footer>
+  <script src="../assets/js/page.js"></script>
+</body>
+</html>
