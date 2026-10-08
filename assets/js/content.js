@@ -51,9 +51,9 @@ window.CONTENT = {
       badge: "Personal project · Oct 2026",
       sub: "A scam checker for India in Hindi, Bengali and English. Paste a message, upload a screenshot or describe a call; it never says \"safe\", and it says \"can't tell\" instead of guessing.",
       stats: [
-        { num: "0 / 100", label: "false alarms on never-seen genuine messages" },
-        { num: "80 / 80", label: "never-seen scams caught, none cleared" },
-        { num: "Blocked", label: "by my own launch gate: ambiguous messages 50% vs 70%", warn: true }
+        { num: "1 / 114", label: "false alarms on never-seen genuine messages, over two release runs" },
+        { num: "0 / 96", label: "never-seen scams wrongly cleared" },
+        { num: "Blocked", label: "by my own launch gate, twice: first on ambiguous messages, then on 1 false alarm", warn: true }
       ],
       tags: ["LLM", "Multilingual NLP", "Evals", "Abstention", "Prompt injection", "FastAPI"],
       caseStudy: "case-studies/scam-checker.html",

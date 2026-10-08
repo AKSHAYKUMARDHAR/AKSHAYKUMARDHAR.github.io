@@ -51,10 +51,10 @@
     </div>
 
     <div class="cs-stats">
-      <div class="pstat"><b>0 / 100</b><span>false alarms on never-seen genuine messages</span></div>
-      <div class="pstat"><b>80 / 80</b><span>never-seen scams caught, none cleared</span></div>
+      <div class="pstat"><b>1 / 114</b><span>false alarms on never-seen genuine messages, over two release runs</span></div>
+      <div class="pstat"><b>0 / 96</b><span>never-seen scams wrongly cleared</span></div>
       <div class="pstat"><b>0 / 50</b><span>prompt-injection attacks that changed a verdict</span></div>
-      <div class="pstat warn"><b>Blocked</b><span>launch, by my own gate: ambiguous messages 50% vs 70%</span></div>
+      <div class="pstat warn"><b>Blocked twice</b><span>by my own launch gate: ambiguous messages, then 1 false alarm</span></div>
     </div>
 
     <section class="cs-sec">
@@ -88,7 +88,7 @@
         <img src="../assets/img/app-unsure-en.png" alt="An English 'Can't tell' card that explains a short link and how to check safely" loading="lazy">
         <img src="../assets/img/app-call-bn.png" alt="The five phone-call questions in Bengali" loading="lazy">
       </div>
-      <p style="margin-top:14px">Also in the product: an "I already paid" button that goes straight to the 1930 helpline steps, a WhatsApp share card that never includes the original message, a verdict-first vs explanation-first A/B split, feedback buttons, and an event log that stores no message text.</p>
+      <p style="margin-top:14px">Also in the product: an "I already paid" button that goes straight to the 1930 helpline steps, a WhatsApp share card that never includes the original message, a verdict-first vs explanation-first A/B split, feedback buttons, and an event log that stores no message text. When the free model quota runs out, messages still get the fixed rules' answer instead of an error.</p>
     </section>
 
     <section class="cs-sec">
@@ -97,6 +97,7 @@
         <li><strong>Three verdicts, never "safe".</strong> One wrong "scam" on a genuine bank message costs more trust than ten honest "can't tell" answers.</li>
         <li><strong>Rules decide the cases that are always fraud.</strong> Banks never ask for an OTP, and you never need a PIN to receive money. Every hard rule is tested against genuine look-alikes: OTP messages that say "do not share", delivery OTPs you <em>do</em> give the agent, police advisories about digital arrest.</li>
         <li><strong>Self-consistency instead of self-reported confidence.</strong> Two runs must agree. The PRD planned three; the golden set showed the third never changed a verdict (128 of 128), so I cut it and saved a third of the cost.</li>
+        <li><strong>No ask, no "Likely scam" from the model alone.</strong> A first-contact opener ("this is my new number, save it") asks for nothing yet, so nothing can be lost yet. The card says "can't tell" and what to watch for in the next message. I added this rule after my first release run failed on exactly these messages.</li>
         <li><strong>The injection guard sits outside the model</strong>, a lesson from my UPI agent, where a system prompt alone did not stop an injection.</li>
         <li><strong>Advice is never generated.</strong> Next steps, numbers and links are fixed templates in three languages; the model's quotes are checked against the message and dropped if they don't appear.</li>
       </ul>
@@ -104,40 +105,42 @@
 
     <section class="cs-sec">
       <h2>How I tested it</h2>
-      <p>I froze a 200-message held-out set in git <strong>before writing any rule or prompt</strong>, tuned on a separate 200-message golden set, and ran the held-out set once, on the frozen configuration. 80 scams, 100 genuine messages (35 of them alarming look-alikes) and 20 ambiguous ones, in Hindi, Bengali and English, including Hindi and Bengali typed in Latin script.</p>
+      <p>I froze a 200-message held-out set in git <strong>before writing any rule or prompt</strong>, tuned on a separate 200-message golden set, and ran the held-out set once on the frozen configuration. When it failed, I fixed the problem on the golden set only, wrote <strong>50 fresh messages and froze them before the fix existed</strong>, and ran those once. The messages are in Hindi, Bengali and English, including Hindi and Bengali typed in Latin script, plus phone-call descriptions.</p>
       <div class="table-wrap"><table class="res-table">
-        <thead><tr><th>Version</th><th>False alarms</th><th>Scams cleared</th><th>Scams caught</th><th>Ambiguous → can't tell</th></tr></thead>
+        <thead><tr><th>Release run</th><th>False alarms</th><th>Scams cleared</th><th>Scams caught</th><th>Ambiguous → can't tell</th></tr></thead>
         <tbody>
-          <tr><td>A · Rules only</td><td>0 / 100</td><td>0 / 80</td><td>47.5%</td><td>95%</td></tr>
-          <tr><td>B · Rules + 1 model run</td><td>1 / 100</td><td>0 / 80</td><td>100%</td><td>50%</td></tr>
-          <tr class="hl"><td>C · Rules + 2 runs (shipped)</td><td>0 / 100</td><td>0 / 80</td><td>100%</td><td>50%</td></tr>
+          <tr><td>Run 1 · 200 messages</td><td>0 / 100</td><td>0 / 80</td><td>100%</td><td>50%</td></tr>
+          <tr class="hl"><td>Run 2 · 50 fresh messages, after the fix</td><td>1 / 14</td><td>0 / 16</td><td>87.5%</td><td>85%</td></tr>
         </tbody>
       </table></div>
-      <h3>Release gate</h3>
+      <p style="margin-top:12px">In run 1, the rules alone caught 47.5% of scams with no false alarm, and requiring two model runs to agree removed the one false alarm a single run made.</p>
+      <h3>Release gate, run 2</h3>
       <ul class="checklist">
-        <li>False alarms ≤ 2% of genuine messages: 0 of 100</li>
-        <li>Scams cleared ≤ 5%: 0 of 80</li>
-        <li>Scam type correct ≥ 85%: 96.2%</li>
-        <li>No language with more than 2 false alarms: 0 in each</li>
+        <li>Ambiguous messages get "can't tell" ≥ 70%: 85% (run 1: 50%)</li>
+        <li>Scams cleared ≤ 5%: 0 of 16</li>
+        <li>Scam type correct ≥ 85%: 100%</li>
         <li>Prompt-injection suite, zero verdict flips: 0 of 50</li>
-        <li class="fail">Ambiguous messages get "can't tell" ≥ 70%: 50%</li>
+        <li class="fail">False alarms ≤ 2% of genuine messages: 1 of 14</li>
         <li class="pending">Native-speaker review of the explanations: pending</li>
       </ul>
     </section>
 
     <section class="cs-sec">
       <h2>What failed, and what's next</h2>
-      <div class="callout callout-amber"><strong>My own gate blocked the launch.</strong> The model is too sure on first-contact messages with no request yet ("Maa, this is my new number, save it", "a complaint is registered, press 9"), calling them scams with 0.85 to 0.95 confidence. A wrong "scam" does less harm than a wrong "safe", but it is exactly the miscalibration the gate exists to catch. So the live site stays a demo, not a launched product, until a fix passes on fresh messages.</div>
-      <p style="margin-top:16px">The next iteration follows the PRD: tune the prompt on the golden set so first-contact messages are "can't tell" unless they ask for money, secrets or an app; write 50 fresh held-out messages before tuning; and re-run the gate. Collecting real, consented messages is the step after that.</p>
+      <div class="callout callout-amber"><strong>My own gate blocked the launch twice.</strong> In run 1 the model was too sure on first-contact messages with no request yet ("Maa, this is my new number, save it"), so I added a rule: the model alone can't call a message a scam unless it asks for something risky (pay, open a link, call a number, share a code, install an app). Run 2 met the ambiguous target but called one genuine Hindi SBI debit alert a scam ("if this wasn't you, call 1800 1234"), a format fraudsters copy. So the live site stays a demo, not a launched product.</div>
+      <p style="margin-top:16px">Two honest caveats from run 2. On those fresh messages the model alone would already have reached 80% on ambiguous messages, so the run shows the target is met, not that my rule is what meets it; the rule also turned two "press 9"-style scams into "can't tell", though neither was cleared. And with only 14 genuine messages, one mistake is 7%: my second test set was too small to test a 2% bar fairly.</p>
+      <p>Next: treat bank alerts that point to an official helpline as a known genuine pattern, re-test on at least 100 genuine messages, preferably real ones, and run the second-labeller and native-speaker reviews, whose kits are in the repo.</p>
       <h3>What I learned</h3>
       <ul>
-        <li>A held-out set frozen before the rules is what makes the numbers worth trusting.</li>
+        <li>A held-out set frozen before the rules is what makes the numbers worth trusting, and every fix needs a fresh one.</li>
+        <li>Check the counterfactual. Re-scoring the same cached answers without my fix showed how little it did on the second set.</li>
+        <li>Size a test set for the bar it tests: 14 genuine messages can't measure a 2% false-alarm rate.</li>
         <li>Measure the expensive part. The third model run looked prudent and did nothing.</li>
-        <li>Free tiers shape evaluation plans: 500 requests a day per model decided how much I could test, and in what order.</li>
+        <li>Free tiers shape evaluation plans: 500 requests a day per project decided how much I could test, and in what order.</li>
       </ul>
     </section>
 
-    <p class="cs-note">The test messages are hand-written, modelled on publicly reported scam patterns and real message formats; results on real messages may differ. Every number comes from a logged run in the repo.</p>
+    <p class="cs-note">All 500 test messages are hand-written, modelled on publicly reported scam patterns and real message formats, by the same person who wrote the rules; results on real messages may differ. Every number comes from a logged run in the repo.</p>
   </main>
 
   <footer class="footer">
