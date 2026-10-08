@@ -47,6 +47,21 @@ window.CONTENT = {
   // Personal AI product projects: each has a PRD, a case study and the code
   projects: [
     {
+      title: "Will My Policy Pay?",
+      badge: "Personal project · Oct 2026",
+      sub: "Indian health insurance fine print, explained before a claim. Every limit is quoted with its page from the insurer's own document, and a bill simulator shows what a hospital bill would actually pay.",
+      stats: [
+        { num: "14", label: "real policy documents from 10 insurers, frozen before any prompt" },
+        { num: "8.2% → 1.2%", label: "wrong facts on the dev set once code checks every quote" },
+        { num: "25 / 25", label: "hand-worked hospital bills matched by the simulator" }
+      ],
+      tags: ["LLM", "Document extraction", "Cited answers", "Evals", "Insurtech", "FastAPI"],
+      caseStudy: "case-studies/will-my-policy-pay.html",
+      demo: "https://will-my-policy-pay.onrender.com",
+      prd: "https://github.com/AKSHAYKUMARDHAR/Will-My-Policy-Pay/blob/main/docs/PRD.md",
+      github: "https://github.com/AKSHAYKUMARDHAR/Will-My-Policy-Pay"
+    },
+    {
       title: "Is This a Scam?",
       badge: "Personal project · Oct 2026",
       sub: "A scam checker for India in Hindi, Bengali and English. Paste a message, upload a screenshot or describe a call; it never says \"safe\", and it says \"can't tell\" instead of guessing.",
@@ -168,13 +183,14 @@ window.CONTENT = {
 
   skills: [
     { group: "AI product", items: [
-      ["Evaluation design: golden sets, held-out sets, release bars", "Catalysk, UPI agent, scam checker"],
+      ["Evaluation design: golden sets, held-out sets, release bars", "Catalysk, UPI agent, scam checker, policy explainer"],
       ["Confidence gating and human-in-the-loop", "Catalysk, UPI agent"],
-      ["Abstention design: three-way verdicts, self-consistency", "Scam checker"],
+      ["Abstention design: three-way verdicts, self-consistency", "Scam checker, policy explainer"],
+      ["Verified extraction: every answer quoted and checked in code", "Policy explainer"],
       ["Model selection by bake-off", "Catalysk"],
       ["Agent guardrails and prompt-injection testing", "UPI agent, scam checker"],
-      ["Prompt design", "9fin, UPI agent, scam checker"],
-      ["PRDs and success metrics", "UPI agent, scam checker"],
+      ["Prompt design", "9fin, UPI agent, scam checker, policy explainer"],
+      ["PRDs and success metrics", "UPI agent, scam checker, policy explainer"],
       ["A/B test design with power analysis", "Scam checker"]
     ] },
     { group: "AI and ML", items: [
@@ -191,15 +207,15 @@ window.CONTENT = {
       ["Python (Pandas)", "all roles"],
       ["SQL / PostgreSQL", "Catalysk, 9fin"],
       ["PySpark", "BYJU'S"],
-      ["FastAPI", "UPI agent, scam checker"],
+      ["FastAPI", "UPI agent, scam checker, policy explainer"],
       ["n8n", "UPI agent"],
       ["YAML config-driven pipelines", "Catalysk"],
       ["Git / GitHub", "all projects"]
     ] },
     { group: "AI tools", items: [
-      ["Claude Code", "UPI agent, scam checker and daily build work"],
+      ["Claude Code", "UPI agent, scam checker, policy explainer and daily build work"],
       ["Cursor", "build work"],
-      ["Gemini API", "9fin, UPI agent, scam checker"],
+      ["Gemini API", "9fin, UPI agent, scam checker, policy explainer"],
       ["Anthropic API", "UPI agent"]
     ] },
     { group: "Data and BI", items: [
@@ -212,6 +228,7 @@ window.CONTENT = {
     { group: "Domains", items: [
       ["Fintech: UPI/VPA, bank transactions, institutional credit", "Catalysk, 9fin, UPI agent"],
       ["Fraud and scam prevention in India", "Scam checker"],
+      ["Health insurance in India: IRDAI claim rules", "Policy explainer"],
       ["ESG and sustainability", "Catalysk"],
       ["Energy", "Energia"],
       ["Edtech", "BYJU'S"]

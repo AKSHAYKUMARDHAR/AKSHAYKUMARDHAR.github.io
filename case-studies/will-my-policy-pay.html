@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case study: Will My Policy Pay? | Akshay Dhar</title>
+  <meta name="description" content="Case study: a tool that explains Indian health insurance fine print before a claim, quoting every limit from the insurer's own document, evaluated on real policy documents.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">AD</span><span class="brand-name">Akshay Dhar</span></a>
+      <div class="nav-actions push">
+        <a class="btn btn-ghost btn-sm" href="../index.html#projects">All projects</a>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap cs-main">
+    <a class="cs-back" href="../index.html#projects">← Back to portfolio</a>
+    <p class="eyebrow">Case study · Personal project · Oct 2026</p>
+    <h1 class="cs-title">Will My Policy Pay?</h1>
+    <p class="cs-sub">Health insurance fine print, explained before you need it: every limit quoted from the insurer's own document, and what a hospital bill would actually pay.</p>
+    <p class="print-only muted-sm">Akshay Dhar · akshaykumardhar14@gmail.com · github.com/AKSHAYKUMARDHAR/Will-My-Policy-Pay</p>
+
+    <div class="cs-links">
+      <a class="btn btn-primary btn-sm" href="https://will-my-policy-pay.onrender.com" target="_blank" rel="noopener">Try it live</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Will-My-Policy-Pay/blob/main/docs/PRD.md" target="_blank" rel="noopener">Read the PRD</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Will-My-Policy-Pay" target="_blank" rel="noopener">Code on GitHub</a>
+      <a class="btn btn-ghost btn-sm" href="../assets/files/case-study-will-my-policy-pay.pdf" target="_blank" rel="noopener">Download PDF</a>
+    </div>
+
+    <div class="card cs-meta">
+      <div><h4>My role</h4><p>Solo: research, PRD, labelling, evaluation design and the build, with Claude Code.</p></div>
+      <div><h4>When</h4><p>Oct 2026</p></div>
+      <div><h4>Stack</h4><p>Python, FastAPI, Gemini (reads PDFs), pypdf, vanilla JS, Docker</p></div>
+    </div>
+
+    <div class="cs-stats">
+      <div class="pstat"><b>14</b><span>real policy documents from 10 insurers, frozen before any prompt</span></div>
+      <div class="pstat"><b>8.2% → 1.2%</b><span>wrong facts on the dev set once code checks every quote (same model answers)</span></div>
+      <div class="pstat"><b>25 / 25</b><span>hand-worked hospital bills matched by the simulator</span></div>
+      <div class="pstat warn"><b>9 Oct</b><span>held-out release run: 9 documents never used while building, run once</span></div>
+    </div>
+
+    <section class="cs-sec">
+      <h2>The problem</h2>
+      <p>In a 2025 LocalCircles survey, only 25% of policyholders who had claimed said their claims were fully approved; 36% had a claim rejected and 33% had one only partly paid. Insurers processed 3.26 crore health claims in 2024-25 and repudiated 8%, and IRDAI told Parliament it doesn't record why.</p>
+      <p>Much of the money is lost in a few lines of fine print people never read. With a room-rent cap of 1% of the sum insured, a ₹5 lakh policy pays ₹5,000 a day for the room; take an ₹8,000 room and most doctor and surgery charges are cut in the same proportion. On a knee replacement that turns ₹15,000 of extra rent into ₹60,000 out of pocket.</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>The family guardian</strong> checking a parent's older policy before a hospital visit.</li>
+        <li><strong>The new buyer</strong> comparing two policies, now cheaper since GST came off individual health premiums in September 2025.</li>
+        <li><strong>The patient before a planned surgery</strong> deciding which room to take.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What I built</h2>
+      <p>A free web tool. Pick a policy (or upload its PDF) and get a fine-print card of 17 terms: room and ICU limits, co-payments, deductible, cataract and modern-treatment caps, waiting periods, maternity, bonus and restoration. Every value shows the exact words and page from the insurer's document. A bill simulator then shows line by line what a hospital bill would pay, and a guide covers what to do if a claim is cut, with a grievance letter.</p>
+      <div class="flow">
+        <div class="flow-step"><b>Policy PDF</b><small>insurer's wording or summary</small></div>
+        <div class="flow-step k-agent"><b>Model reads it twice</b><small>17 terms, each with a quote and page</small></div>
+        <div class="flow-step k-gate"><b>Code checks</b><small>reads agree, quote on the page, numbers in the quote</small></div>
+        <div class="flow-step k-ok"><b>Card and simulator</b><small>fixed explanations; arithmetic in code</small></div>
+      </div>
+      <div class="shot">
+        <img src="../assets/img/policy-pick.png" alt="The start page: the promise in plain English and five policies already read" loading="lazy">
+        <img src="../assets/img/policy-card.png" alt="A fine-print card: watch-outs, a room-rent limit with the insurer's clause and page, and a co-payment marked 'check this yourself' with both readings" loading="lazy">
+        <img src="../assets/img/policy-bill.png" alt="A knee-replacement bill: line by line, what the policy pays and why, with the proportionate deduction and IRDAI's exemptions" loading="lazy">
+      </div>
+      <p style="margin-top:14px">Also in the product: share links that open a card or a sample bill, a "This looks wrong" button on every term, feedback questions that measure the PRD's goals, and an event log that stores no document text. Uploaded PDFs are read and thrown away. When the free model quota runs out, uploads say so plainly and the ready-made cards keep working.</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Product decisions</h2>
+      <ul>
+        <li><strong>The model reads; code checks, explains and calculates.</strong> Gemini only extracts values with quotes. Every explanation a user reads is written once in code, and the bill simulator is deterministic, tested against 25 hand-worked bills.</li>
+        <li><strong>Proof or nothing.</strong> A term is shown only when two independent reads agree, the quote is found on the cited page and contains the value's numbers. Otherwise the card says "not found" or "check this yourself", with both quotes.</li>
+        <li><strong>"No limit" needs the words.</strong> A summary that lists "Expenses incurred towards Ambulance" doesn't say there is no cap; the policy schedule might set one. Saying "no limit" wrongly is the error this product exists to prevent.</li>
+        <li><strong>IRDAI's rules in code.</strong> The proportionate deduction never touches medicines, implants, tests or ICU charges (IRDAI's 2020 circular), and the simulator cites it on each line.</li>
+        <li><strong>Neutral by design.</strong> No recommendations, rankings or commissions: selling insurance is licensed activity in India.</li>
+        <li><strong>English only, written for a first-time reader.</strong></li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>How I tested it</h2>
+      <p>This time the test data is real. I collected <strong>14 public policy documents from 10 insurers</strong> (wordings, customer information sheets and prospectuses) and froze them in git with their hashes <strong>before writing any prompt</strong>. Then I wrote the answer keys by hand from the documents: 85 facts for 5 dev documents and 153 for 9 held-out documents, each with the exact quote and page, checked against the PDFs by a script. The main labelling rule is "only what the document says": if a summary doesn't state a limit, the answer is "not stated", because the policy schedule can still set one.</p>
+      <p>Every answer is scored <strong>correct</strong>, <strong>wrong</strong> (a value shown that the document doesn't support: the error that costs money) or <strong>withheld</strong> ("not found" or "check this yourself" where the document does state a value). I ran the same model answers with and without the checks, to measure what the checks themselves do.</p>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Dev run (85 facts)</th><th>Correct</th><th>Wrong</th><th>Withheld</th></tr></thead>
+        <tbody>
+          <tr><td>Prompt v1 · 2 reads, no checks</td><td>88%</td><td>8.2%</td><td>4%</td></tr>
+          <tr><td>Prompt v1 · 2 reads + checks</td><td>74%</td><td>1.2%</td><td>25%</td></tr>
+          <tr><td>Prompt v2 · 2 reads + checks (4 of 5 documents)</td><td>91%</td><td>1.5%</td><td>7%</td></tr>
+          <tr><td>Prompt v3 · smaller model (gemini-3.5-flash-lite)</td><td>80%</td><td>8.2%</td><td>12%</td></tr>
+          <tr><td>Prompt v3 · 2 reads + checks</td><td>92%</td><td>3.5%</td><td>5%</td></tr>
+          <tr class="hl"><td>Prompt v3 + "none for everyone" checks · frozen</td><td>91%</td><td>0%</td><td>9%</td></tr>
+        </tbody>
+      </table></div>
+      <p>The configuration is now frozen: prompt version 3 on gemini-3.5-flash, two reads and every check above. The release run on the 9 held-out documents (152 scored facts) happens once, on 9 October 2026, and its result goes here whether it passes or not.</p>
+      <h3>Release gate</h3>
+      <ul class="checklist">
+        <li>Bill simulator matches all 25 hand-worked bills: 25 of 25</li>
+        <li class="pending">Wrong facts ≤ 2% of held-out facts: pending the release run (dev: 0 of 85)</li>
+        <li class="pending">Correct ≥ 85% of held-out facts: pending the release run (dev: 91%)</li>
+        <li class="pending">Every value shown is quoted and verified on its page: pending the release run</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What failed, and what's next</h2>
+      <div class="callout callout-amber"><strong>The checks cut wrong answers sevenfold, and at first they withheld a quarter of the card.</strong> Version 1 of the prompt let the model quote a heading or a definition instead of the line that sets the limit, so correct values failed verification. Version 2 asks for the words that set each value and lets the model join two passages with "...", each checked on its own; withheld facts fell from 25% to 7%.</div>
+      <p style="margin-top:16px">The worst early error called ambulance cover "up to your sum insured" from a line that only said "Expenses incurred towards Ambulance". A "no limit" answer now needs words that say so. Version 3 still showed 3 wrong facts on the full dev set: two read "no co-payment" from sentences that only exempt some people (by entry age or city zone), and one took a ceiling shared by several covers as AYUSH's own limit. Two more code checks send such quotes to "check this yourself", which took wrong facts to zero on the same answers and cost one correct one. The smaller, cheaper models failed the bar: both read "1% of the sum insured or actual, whichever is lower" as a choice of two limits and called a premium discount a bonus. The model that passes allows 20 free requests a day, so ready-made cards are built from the evaluation's own readings and uploads are capped.</p>
+      <p>Next: a second labeller for the answer keys, the policy schedule as a second upload (it sets the limits a wording leaves open), and scanned PDFs, which the tool currently turns away.</p>
+      <h3>What I learned</h3>
+      <ul>
+        <li>Verification is the product. The same two reads showed 7 wrong facts without the checks and 1 with them.</li>
+        <li>The labeller makes mistakes too. The model found a bonus clause I had missed (Bajaj, page 22); I corrected the dev key and logged it. Held-out labels never change after a run.</li>
+        <li>Real documents beat hand-written test data: every hard case (tables, two-column pages, "whichever is lower") came from an insurer's own PDF.</li>
+        <li>Free tiers shape evaluation plans: 20 requests a day decided the order of every run.</li>
+      </ul>
+    </section>
+
+    <p class="cs-note">The 14 documents are real, public policy documents; the answer keys are mine, written from the documents before any model read them. Every number comes from a logged run in the repo.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Akshay Dhar</span>
+      <a href="../index.html">Back to portfolio</a>
+    </div>
+  </footer>
+  <script src="../assets/js/page.js"></script>
+</body>
+</html>
