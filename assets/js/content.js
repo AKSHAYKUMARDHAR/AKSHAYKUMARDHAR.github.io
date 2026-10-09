@@ -51,7 +51,7 @@ window.CONTENT = {
       badge: "Personal project · Oct 2026",
       sub: "Indian health insurance fine print, explained before a claim. Every limit is quoted with its page from the insurer's own document, and a bill simulator shows what a hospital bill would actually pay.",
       stats: [
-        { num: "23", label: "real policy documents from 15 insurers, each frozen before use" },
+        { num: "23", label: "real policy documents from 15 insurers, frozen and labelled by hand" },
         { num: "8.2% → 1.2%", label: "wrong facts once code checks every quote (same model answers)" },
         { num: "Blocked twice", label: "by my own release gate: over 2% wrong facts on unseen policies, in both release runs", warn: true }
       ],
