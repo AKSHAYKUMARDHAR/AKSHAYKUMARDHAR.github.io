@@ -49,7 +49,7 @@ window.CONTENT = {
     {
       title: "RBI Circular Radar",
       badge: "Personal project · Oct 2026",
-      sub: "A daily digest for compliance teams: which new RBI notifications apply to your entity type, what to do and by when. Every claim is quoted with its page from RBI's own PDF, and anything code can't confirm says \"check\".",
+      sub: "A live digest for compliance teams: which new RBI notifications apply to your entity type, what to do and by when. Every claim is quoted with its page from RBI's own PDF, and anything code can't confirm says \"check\".",
       stats: [
         { num: "80", label: "real RBI notifications, drawn from all 376 issued in six months and labelled by hand" },
         { num: "11 → 1", label: "wrong dates out of 165 on unseen notifications, once code checks every quote" },

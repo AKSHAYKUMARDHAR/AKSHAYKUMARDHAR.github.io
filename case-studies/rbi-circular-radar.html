@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Case study: RBI Circular Radar | Akshay Dhar</title>
-  <meta name="description" content="Case study: a daily digest that tells fintech and bank compliance teams which new RBI notifications apply to them, what to do and by when, with every claim quoted from RBI's own PDF, evaluated recall-first on 80 real notifications.">
+  <meta name="description" content="Case study: a live digest that tells fintech and bank compliance teams which new RBI notifications apply to them, what to do and by when, with every claim quoted from RBI's own PDF, evaluated recall-first on 80 real notifications.">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
     <a class="cs-back" href="../index.html#projects">← Back to portfolio</a>
     <p class="eyebrow">Case study · Personal project · Oct 2026</p>
     <h1 class="cs-title">RBI Circular Radar</h1>
-    <p class="cs-sub">Which new RBI rules apply to you, what to do, and by when. A daily digest for compliance teams, with RBI's own words and page behind every claim.</p>
+    <p class="cs-sub">Which new RBI rules apply to you, what to do, and by when. A live digest for compliance teams, with RBI's own words and page behind every claim.</p>
     <p class="print-only muted-sm">Akshay Dhar · akshaykumardhar14@gmail.com · github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar</p>
 
     <div class="cs-links">
@@ -74,7 +74,7 @@
 
     <section class="cs-sec">
       <h2>What I built</h2>
-      <p>A free daily digest. Every morning a GitHub Actions job reads the RBI notifications published since the last run. For each one it says which of 17 entity types it applies to: seven kinds of bank, NBFCs, all-India financial institutions, ARCs, credit information companies, payment aggregators, PPI issuers, other payment operators, authorised dealers, primary dealers and others. It also gives the kind of notice, whether action is required, and the dates that matter: in force from, deadlines, comments due. Each claim opens to the exact quote and links to that page of RBI's PDF. Tick your entity types once, filter to "action required" and export to CSV for your tracker.</p>
+      <p>A free live digest. Every 10 minutes a GitHub Actions job checks RBI for new notifications, and reads each one as it appears. For each one it says which of 17 entity types it applies to: seven kinds of bank, NBFCs, all-India financial institutions, ARCs, credit information companies, payment aggregators, PPI issuers, other payment operators, authorised dealers, primary dealers and others. It also gives the kind of notice, whether action is required, and the dates that matter: in force from, deadlines, comments due. Each claim opens to the exact quote and links to that page of RBI's PDF. Tick your entity types once, filter to "action required" and export to CSV for your tracker.</p>
       <div class="flow">
         <div class="flow-step"><b>New RBI notification</b><small>found by id, PDF fetched</small></div>
         <div class="flow-step k-agent"><b>Rules + one model read</b><small>title, addressee, applicability; then Gemini with quotes and pages</small></div>
@@ -94,7 +94,7 @@
         <li><strong>Rules where RBI's format is reliable, the model for the rest.</strong> Since the 2025 consolidation, directions name their entity type in the title, and circulars carry an addressee line. Rules read those for free; one Gemini read covers the rest: the action, the deadlines, who else is affected.</li>
         <li><strong>The model reads; code checks.</strong> A claim is shown as fact only when its quote is on the cited page and supports it. An entity's quote must name that entity type, and a date's quote must contain the date and say what it's for, so the letterhead date can't pass as a commencement date. Anything else says "check the document".</li>
         <li><strong>Built around fintech licences.</strong> Payment aggregators, PPI issuers and payment operators are first-class types, and a notice to "Payment System Providers" maps to all three.</li>
-        <li><strong>No server.</strong> A static site rebuilt daily costs nothing to run and can't leak anything; the free model tier covers RBI's daily volume.</li>
+        <li><strong>No server.</strong> A static site, republished only when RBI publishes something, costs nothing to run and can't leak anything. A check with nothing new uses no model request, so the free tier covers RBI's volume (about 15 notices a week).</li>
         <li><strong>Not advice.</strong> It points you to the notice and the page; you read it before acting.</li>
       </ul>
     </section>
