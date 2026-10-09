@@ -10,6 +10,7 @@ Personal portfolio of Akshay Dhar, AI Product Manager. A plain static site: HTML
   - `upi-triage-agent.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/UPI-Triage-Agent/blob/main/docs/PRD.md)
   - `scam-checker.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/Is-This-A-Scam/blob/main/docs/PRD.md) and [live demo](https://is-this-a-scam.onrender.com)
   - `will-my-policy-pay.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/Will-My-Policy-Pay/blob/main/docs/PRD.md) and [live demo](https://will-my-policy-pay.onrender.com)
+  - `rbi-circular-radar.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar/blob/main/docs/PRD.md) and [live digest](https://akshaykumardhar.github.io/RBI-Circular-Radar/)
 
 ## Edit content
 

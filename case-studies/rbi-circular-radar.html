@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case study: RBI Circular Radar | Akshay Dhar</title>
+  <meta name="description" content="Case study: a daily digest that tells fintech and bank compliance teams which new RBI notifications apply to them, what to do and by when, with every claim quoted from RBI's own PDF, evaluated recall-first on 80 real notifications.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">AD</span><span class="brand-name">Akshay Dhar</span></a>
+      <div class="nav-actions push">
+        <a class="btn btn-ghost btn-sm" href="../index.html#projects">All projects</a>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap cs-main">
+    <a class="cs-back" href="../index.html#projects">← Back to portfolio</a>
+    <p class="eyebrow">Case study · Personal project · Oct 2026</p>
+    <h1 class="cs-title">RBI Circular Radar</h1>
+    <p class="cs-sub">Which new RBI rules apply to you, what to do, and by when. A daily digest for compliance teams, with RBI's own words and page behind every claim.</p>
+    <p class="print-only muted-sm">Akshay Dhar · akshaykumardhar14@gmail.com · github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar</p>
+
+    <div class="cs-links">
+      <a class="btn btn-primary btn-sm" href="https://akshaykumardhar.github.io/RBI-Circular-Radar/" target="_blank" rel="noopener">Open the digest</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar/blob/main/docs/PRD.md" target="_blank" rel="noopener">Read the PRD</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar" target="_blank" rel="noopener">Code on GitHub</a>
+      <a class="btn btn-ghost btn-sm" href="../assets/files/case-study-rbi-circular-radar.pdf" target="_blank" rel="noopener">Download PDF</a>
+    </div>
+
+    <div class="card cs-meta">
+      <div><h4>My role</h4><p>Solo: research, PRD, sampling and labelling, evaluation design and the build, with Claude Code.</p></div>
+      <div><h4>When</h4><p>Oct 2026</p></div>
+      <div><h4>Stack</h4><p>Python, Gemini 3.5 Flash-Lite, pypdf, GitHub Actions and Pages, vanilla JS</p></div>
+    </div>
+
+    <div class="cs-stats">
+      <div class="pstat"><b>80</b><span>real RBI notifications, drawn from all 376 issued in six months, frozen and labelled by hand</span></div>
+      <div class="pstat"><b>11 → 1</b><span>wrong dates out of 165 on unseen notifications, once code checks every quote</span></div>
+      <div class="pstat"><b>107 / 110</b><span>applicable (notification, entity type) pairs caught across two release runs</span></div>
+      <div class="pstat warn"><b>Blocked twice</b><span>by my own recall-first gate (no applicable pair missed): 2 misses, then 1</span></div>
+    </div>
+
+    <section class="cs-sec">
+      <h2>The problem</h2>
+      <p>RBI issued 376 notifications between 1 April and 7 October 2026, about 15 a week. In November 2025 it consolidated about 9,000 circulars into 244 Master Directions, one set per type of regulated entity. So a single change now often arrives as several near-identical "Amendment Directions": on 7 October one capital-adequacy change came as four documents, for four entity types. The daily question for a compliance team ("does this one apply to us, what must we do, by when?") has become a filtering problem.</p>
+      <p>Missing one costs money and trust. RBI fined a payment aggregator, Cashfree Payments, ₹3.10 lakh in March 2026 for not complying with its payment aggregator directions. Its January 2024 circular asks banks and larger NBFCs to run compliance monitoring on technology, yet vendors still describe updates "pushed via excels".</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>The compliance manager at a fintech</strong> (payment aggregator, PPI issuer, NBFC lender) who has to tell product and tech every morning what changed for their licences.</li>
+        <li><strong>The compliance team at a small bank</strong> (urban co-operative, small finance, regional rural) without a regulatory-intelligence subscription.</li>
+        <li><strong>The head of compliance</strong> who needs to show that nothing applicable was missed.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What I built</h2>
+      <p>A free daily digest. Every morning a GitHub Actions job reads the RBI notifications published since the last run. For each one it says which of 17 entity types it applies to: seven kinds of bank, NBFCs, all-India financial institutions, ARCs, credit information companies, payment aggregators, PPI issuers, other payment operators, authorised dealers, primary dealers and others. It also gives the kind of notice, whether action is required, and the dates that matter: in force from, deadlines, comments due. Each claim opens to the exact quote and links to that page of RBI's PDF. Tick your entity types once, filter to "action required" and export to CSV for your tracker.</p>
+      <div class="flow">
+        <div class="flow-step"><b>New RBI notification</b><small>found by id, PDF fetched</small></div>
+        <div class="flow-step k-agent"><b>Rules + one model read</b><small>title, addressee, applicability; then Gemini with quotes and pages</small></div>
+        <div class="flow-step k-gate"><b>Code checks</b><small>quote on the page and supports the claim</small></div>
+        <div class="flow-step k-ok"><b>Digest</b><small>"check" where it can't confirm</small></div>
+      </div>
+      <div class="shot">
+        <img src="../assets/img/radar-digest.png" alt="The digest: entity-type profile, filters and notification cards with applies-to chips, action and dates" loading="lazy">
+        <img src="../assets/img/radar-card.png" alt="One notification: action required, RBI's own words with a link to the PDF page, and an entity type marked 'may apply: check'" loading="lazy">
+      </div>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Product decisions</h2>
+      <ul>
+        <li><strong>Recall first.</strong> A compliance team can skim one extra notice; it can't afford to miss one that applies. So the release gate was zero missed (notification, entity type) pairs, with precision only needing 85%.</li>
+        <li><strong>Rules where RBI's format is reliable, the model for the rest.</strong> Since the 2025 consolidation, directions name their entity type in the title, and circulars carry an addressee line. Rules read those for free; one Gemini read covers the rest: the action, the deadlines, who else is affected.</li>
+        <li><strong>The model reads; code checks.</strong> A claim is shown as fact only when its quote is on the cited page and supports it. An entity's quote must name that entity type, and a date's quote must contain the date and say what it's for, so the letterhead date can't pass as a commencement date. Anything else says "check the document".</li>
+        <li><strong>Built around fintech licences.</strong> Payment aggregators, PPI issuers and payment operators are first-class types, and a notice to "Payment System Providers" maps to all three.</li>
+        <li><strong>No server.</strong> A static site rebuilt daily costs nothing to run and can't leak anything; the free model tier covers RBI's daily volume.</li>
+        <li><strong>Not advice.</strong> It points you to the notice and the page; you read it before acting.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>How I tested it</h2>
+      <p>I crawled all 376 notifications from April to October 2026 and drew 50 at random, stratified by kind, with a fixed seed, before writing any prompt or label. The draw contained no payment-system notification, yet those are the fintech licences the product is pitched at. So I added the other 10 by a written rule (everything from RBI's payments department, or titled "digital payment", "payment system" or "non-bank entities") and report them separately. Then I wrote the answer keys by hand: for each notification, its entity types, kind, action and dates, each with the exact quote and page, under a label guide written first. A script checks every quote against the PDF.</p>
+      <p>Scoring is per (notification, entity type) pair, and dates are correct, wrong or withheld. Every version is scored from the same model answers, so each layer's value is measured:</p>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Development, 25 notifications</th><th>Missed pairs (of 62)</th><th>Precision</th><th>Dates wrong (of 75)</th></tr></thead>
+        <tbody>
+          <tr><td>Rules only</td><td>0</td><td>100%</td><td>6</td></tr>
+          <tr><td>Model only (gemini-3.5-flash-lite)</td><td>1</td><td>100%</td><td>5</td></tr>
+          <tr><td>Model + code checks</td><td>2</td><td>100%</td><td>1</td></tr>
+          <tr class="hl"><td>Rules + checked model · frozen</td><td>0</td><td>100%</td><td>0</td></tr>
+        </tbody>
+      </table></div>
+      <p>A second model read per notification changed nothing in the merged result, so one read ships. The bigger gemini-3.5-flash wasn't needed: its free tier allows 20 requests a day, and the PRD rule was that the cheaper model ships if it passes.</p>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Release runs, frozen system, run once</th><th>Missed pairs</th><th>Precision</th><th>Dates correct / wrong / withheld</th></tr></thead>
+        <tbody>
+          <tr><td>Run 1 · 35 held-out notifications</td><td>2 of 59</td><td>95.0%</td><td>99 / 0 / 6</td></tr>
+          <tr><td>Run 2 · 20 freshly drawn notifications</td><td>1 of 51</td><td>100%</td><td>51 / 1 / 8</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Release gate</h3>
+      <ul class="checklist">
+        <li class="fail">Run 1, no applicable pair missed: 2 missed</li>
+        <li class="fail">Run 2, no applicable pair missed: 1 missed</li>
+        <li>Precision ≥ 85%: 95.0% and 100%</li>
+        <li>Wrong dates ≤ 2%: 0 of 105 and 1 of 60</li>
+        <li>Correct dates ≥ 85%: 94% and 85.0%</li>
+        <li>Every claim shown is quoted and found on its cited page: all of them</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What failed, and what's next</h2>
+      <div class="callout callout-amber"><strong>Two of the three misses were right answers that my own check threw away.</strong> One notice was addressed to "All Liquidity Adjustment Facility (LAF) participants"; the check knew "LAF participants", and the "(LAF)" in between broke the match. Another went to "Lead Banks Concerned", a phrase it didn't know at all. Both times the model had answered correctly, with the right quote.</div>
+      <p style="margin-top:16px">The third miss was real: an outward-remittance framework placed duties on non-bank platforms only in its annex, and neither the rules nor the model listed them. After run 1, I fixed what it exposed and tested the fixes on development only. Then I drew 20 fresh notifications, labelled them and ran once. Run 2 failed by one pair, the same way.</p>
+      <p>The date checks did their job. On its own the model got 11 of 165 held-out dates wrong, all the same way: where a notice says nothing about when it takes effect, it gave the date printed at the top, even though the prompt says not to. The check that a date's quote must say what the date is for caught all 11. After the checks, 1 date was wrong, and it came from the rules: a scheme "effective from April 1, 2013", mentioned in background text.</p>
+      <p>The rules flattered themselves. They caught every development pair, but missed 6 of 59 on the first held-out set, because I had written them after reading the development documents. On unseen notifications the model carried recall, not the rules.</p>
+      <p>What ships now changes one thing: an entity type the model names but the check can't confirm is shown as "may apply: check" instead of being dropped. Re-scored on the same cached answers, that misses 1 pair in 110, with no wrong dates. It was decided after seeing the failures, so it isn't a pass. The first live notice showed why it matters: on 9 October RBI wrote to "All Scheduled Banks", another phrase the check doesn't know, and the old merge would have dropped all six bank types.</p>
+      <p>Next: label a sample of live notices each week as the new held-out test; grow the entity phrases from live misses, and from the "check" badges users confirm; and put the digest in front of compliance teams at a payment aggregator, a PPI issuer and an NBFC to learn which alerts they act on. After that, email and Slack alerts, NPCI and SEBI circulars, and a second labeller.</p>
+      <h3>What I learned</h3>
+      <ul>
+        <li>A check built to stop false claims can quietly cost recall. In a recall-first product, a check should downgrade a claim to "check", never delete it.</li>
+        <li>Rules written by the person who wrote the answer key overfit the documents that person read. Only unseen documents tell you what the rules are worth.</li>
+        <li>Random samples can miss the users you're building for. The stratified draw had no payment notices at all; a written, separately reported supplement fixed that without pretending it was random.</li>
+        <li>A failed gate is a result. Both runs are logged with their errors, held-out labels were never edited, and the post-hoc numbers are labelled as post-hoc.</li>
+      </ul>
+    </section>
+
+    <p class="cs-note">All 80 notifications are RBI's own public documents, pinned by hash; the answer keys are mine, written before any model read them. Every number comes from a logged run in the repo.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Akshay Dhar</span>
+      <a href="../index.html">Back to portfolio</a>
+    </div>
+  </footer>
+  <script src="../assets/js/page.js"></script>
+</body>
+</html>

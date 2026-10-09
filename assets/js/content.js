@@ -47,6 +47,21 @@ window.CONTENT = {
   // Personal AI product projects: each has a PRD, a case study and the code
   projects: [
     {
+      title: "RBI Circular Radar",
+      badge: "Personal project · Oct 2026",
+      sub: "A daily digest for compliance teams: which new RBI notifications apply to your entity type, what to do and by when. Every claim is quoted with its page from RBI's own PDF, and anything code can't confirm says \"check\".",
+      stats: [
+        { num: "80", label: "real RBI notifications, drawn from all 376 issued in six months and labelled by hand" },
+        { num: "11 → 1", label: "wrong dates out of 165 on unseen notifications, once code checks every quote" },
+        { num: "Blocked twice", label: "by my own recall-first gate: 2, then 1, of 110 applicable pairs missed", warn: true }
+      ],
+      tags: ["LLM", "RegTech", "Cited answers", "Recall-first evals", "Fintech", "GitHub Actions"],
+      caseStudy: "case-studies/rbi-circular-radar.html",
+      demo: "https://akshaykumardhar.github.io/RBI-Circular-Radar/",
+      prd: "https://github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar/blob/main/docs/PRD.md",
+      github: "https://github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar"
+    },
+    {
       title: "Will My Policy Pay?",
       badge: "Personal project · Oct 2026",
       sub: "Indian health insurance fine print, explained before a claim. Every limit is quoted with its page from the insurer's own document, and a bill simulator shows what a hospital bill would actually pay.",
