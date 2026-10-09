@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case study: Why Did It Drop? | Akshay Dhar</title>
+  <meta name="description" content="Case study: an analytics agent that explains why a product metric moved, tested on 70 incidents planted in real GA4 event data, with the release gate failed and every case published.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">AD</span><span class="brand-name">Akshay Dhar</span></a>
+      <div class="nav-actions push">
+        <a class="btn btn-ghost btn-sm" href="../index.html#projects">All projects</a>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap cs-main">
+    <a class="cs-back" href="../index.html#projects">← Back to portfolio</a>
+    <p class="eyebrow">Case study · Personal project · Oct 2026</p>
+    <h1 class="cs-title">Why Did It Drop?</h1>
+    <p class="cs-sub">An analytics agent that explains why a product metric moved, and says when it can't. Tested on incidents planted in real event data, with every case published.</p>
+    <p class="print-only muted-sm">Akshay Dhar · akshaykumardhar14@gmail.com · github.com/AKSHAYKUMARDHAR/Why-Did-It-Drop</p>
+
+    <div class="cs-links">
+      <a class="btn btn-primary btn-sm" href="https://akshaykumardhar.github.io/Why-Did-It-Drop/" target="_blank" rel="noopener">Open the benchmark explorer</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Why-Did-It-Drop/blob/main/docs/PRD.md" target="_blank" rel="noopener">Read the PRD</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Why-Did-It-Drop" target="_blank" rel="noopener">Code on GitHub</a>
+      <a class="btn btn-ghost btn-sm" href="../assets/files/case-study-why-did-it-drop.pdf" target="_blank" rel="noopener">Download PDF</a>
+    </div>
+
+    <div class="card cs-meta">
+      <div><h4>My role</h4><p>Solo: research, PRD, benchmark design, evaluation and the build, with Claude Code.</p></div>
+      <div><h4>When</h4><p>Oct 2026</p></div>
+      <div><h4>Stack</h4><p>Python, DuckDB, Gemini 3.5 Flash-Lite, GA4 event data, GitHub Pages</p></div>
+    </div>
+
+    <div class="cs-stats">
+      <div class="pstat"><b>70</b><span>test cases: incidents planted in Google's real GA4 data, frozen before any prompt</span></div>
+      <div class="pstat"><b>3</b><span>real tracking failures found in Google's own demo data, used as test cases</span></div>
+      <div class="pstat"><b>26 = 26</b><span>development cases right, model versus fixed rules: the model added no decision value</span></div>
+      <div class="pstat warn"><b>Gate failed</b><span>20% wrong causes on the held-out run (gate: 5%), mostly the data's own campaign shifts</span></div>
+    </div>
+
+    <section class="cs-sec">
+      <h2>The problem</h2>
+      <p>When a product metric moves, a PM asks "why?", and an analyst spends hours slicing dashboards. In 2026 Amplitude launched an agent that "investigates root causes, and explains what's driving changes across funnels", and Mixpanel's RCA agent ranks "which dimensions explain the shift". Neither publishes how often it's right.</p>
+      <p>The vendors' own material shows how these agents fail. In the winning story of Amplitude's 2026 AI Impact Awards, the agent first blamed the wrong release, until the user made it count error rates rather than raw errors. Mixpanel's guide warns that if events weren't tracked correctly, "RCA will confidently explain the wrong thing".</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>The PM at a consumer app</strong> who needs to know, before standup, whether a drop is real, where it sits and what likely caused it.</li>
+        <li><strong>The analyst on call</strong> who wants the first hour of slicing done, every query shown, and an honest "the data can't explain this".</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What I built</h2>
+      <p>An investigator over e-commerce event data. Ask "what changed in conversion this week, and why?". Code checks whether the change is beyond normal weekly variation, then runs tracking-health checks for signatures no shopper produces: duplicate purchase events, purchases with no checkout, orders with zero revenue. It then finds the segment that behaved differently from the rest of the site and dates when it split. A model reads that evidence and writes the diagnosis in plain English. Every number is a numbered fact the model cites by id, and code prints the value.</p>
+      <div class="flow">
+        <div class="flow-step"><b>Question</b><small>metric and week</small></div>
+        <div class="flow-step k-agent"><b>Engine (DuckDB)</b><small>real? tracking? which segment? since when?</small></div>
+        <div class="flow-step k-gate"><b>Model + checks</b><small>cites facts by id; unsupported claims become "can't tell"</small></div>
+        <div class="flow-step k-ok"><b>Diagnosis</b><small>cause, segment, start, next step</small></div>
+      </div>
+      <div class="shot">
+        <img src="../assets/img/wdid-explorer.png" alt="The benchmark explorer: held-out scores against the gate, how the agent decides, and case cards" loading="lazy">
+        <img src="../assets/img/wdid-case-right.png" alt="A case it got right: a product-view break on one landing section, an incident type it never saw in development, with the evidence it read" loading="lazy">
+        <img src="../assets/img/wdid-case-wrong.png" alt="A case it got wrong: a currency-units bug in India, blamed on the browser carrying the orders" loading="lazy">
+      </div>
+      <p style="margin-top:14px">The demo is a public benchmark explorer, not a chat box. Every one of the 70 cases is shown with the agent's diagnosis, what was really planted, the expected answer and the full evidence pack, and you can filter to see only the failures.</p>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Product decisions</h2>
+      <ul>
+        <li><strong>Tested, not trusted.</strong> No one publishes accuracy for these agents. The product is the measurement as much as the agent.</li>
+        <li><strong>Code computes, the model explains.</strong> The model never does arithmetic or writes SQL. It asks for metrics from a fixed definition layer and cites facts by reference.</li>
+        <li><strong>Tracking first.</strong> Health checks run before any search for a cause, because broken tracking is the failure vendors themselves warn about.</li>
+        <li><strong>Rates, mix and noise before blame.</strong> Each segment is tested against the rest of the site. A holiday that lowers every segment alike isn't an incident.</li>
+        <li><strong>"Can't tell" is a valid answer.</strong> A confident wrong cause sends engineers after the wrong release; the gate is built around it.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>How I tested it</h2>
+      <p>The data is Google's public GA4 export for its merchandise store: 4,295,584 events, checked against the count its uploader published, built into 360,129 sessions. Surveying it before building anything turned up <strong>three real tracking failures in Google's own demo data</strong>:</p>
+      <ul>
+        <li>add-to-cart events missing until 25 November;</li>
+        <li>purchase events double-firing from 19 to 24 November, which inflated revenue;</li>
+        <li>orders recorded with zero revenue from 26 January.</li>
+      </ul>
+      <p>They became test cases, alongside a strong holiday season and weekly campaign shifts.</p>
+      <p>A seeded generator plants incidents into copies of the real sessions: checkout breaks on one OS, lost traffic from one source, bot bursts, duplicate or missing tracking events, basket drops. It places each only where no natural effect touches the metric. A difference-in-differences test labels each one "clear" or "too small to see" before any agent runs, and segments are scored by the sessions they actually cover, not their labels.</p>
+      <p>That gives 70 cases, frozen in git before any prompt existed: 30 for development and 40 held out, including two incident types development never saw. Development took five engine revisions, each a general rule written after reading the failures:</p>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Development, rules only (30 cases)</th><th>Right</th><th>Wrong cause</th><th>False alarms</th></tr></thead>
+        <tbody>
+          <tr><td>First engine</td><td>16</td><td>8</td><td>2 / 9</td></tr>
+          <tr><td>+ a segment must diverge more than it usually does</td><td>12</td><td>12</td><td>6 / 9</td></tr>
+          <tr><td>+ it must worsen in absolute terms</td><td>14</td><td>10</td><td>6 / 9</td></tr>
+          <tr><td>+ it must make the asked metric worse; rank by impact x severity</td><td>24</td><td>2</td><td>4 / 9</td></tr>
+          <tr class="hl"><td>+ it must be on the asked metric's path · frozen</td><td>26</td><td>2</td><td>2 / 9</td></tr>
+        </tbody>
+      </table></div>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Held-out release run (40 cases), run once</th><th>Right</th><th>Wrong cause</th><th>False alarms</th></tr></thead>
+        <tbody>
+          <tr><td>Rules only (no model)</td><td>30</td><td>7</td><td>2 / 12</td></tr>
+          <tr><td>Model only</td><td>27</td><td>9</td><td>2 / 12</td></tr>
+          <tr class="hl"><td>Model + code checks · what ships</td><td>28</td><td>8</td><td>2 / 12</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Release gate</h3>
+      <ul class="checklist">
+        <li class="fail">Wrong causes ≤ 5%: 8 of 40 (20%)</li>
+        <li class="fail">Right on incidents ≥ 75%: 64%</li>
+        <li class="fail">False alarms ≤ 10% of quiet and holiday weeks: 2 of 12 (17%)</li>
+        <li>Every number shown comes from a query: all of them</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What failed, and what's next</h2>
+      <div class="callout callout-amber"><strong>The hardest competition for a planted incident was the real world.</strong> In early December a genuine surge of new visitors, who convert less, changed the funnel; over New Year, product views from the Home page really did drop. Both are true changes, and in 7 of the 12 held-out misses the agent named one of them instead of the planted incident. The benchmark placed each incident where nothing natural moved the same metric and dimension, but the agent searches every dimension.</div>
+      <p style="margin-top:16px">An incident type the agent had never seen exposed a rule of mine. For a currency-units bug in one country, "when a tracking finding appears in overlapping segments, name the broadest" picked the operating system or browser carrying those orders. The rule was right for duplicate events; for a value jump, the right segment is where the signature is most concentrated.</p>
+      <p><strong>The model added no decision value.</strong> With my first prompt it was worse than the fixed rules (18 against 26 of 30): it said "no real change" whenever the headline was within normal variation, even with a cause listed. With an explicit decision order it matched the rules case for case, and on held-out data the rules alone did slightly better. Its value is the explanation: a plain-English diagnosis and next step built from traced facts. Even there it typed dates itself in 24 of 69 answers; code removed every one. My first write-up claimed it typed none, because my summary read the wrong field. I found that through a screenshot and logged the correction.</p>
+      <p>Next: concentration rather than breadth for value-jump findings; ties broken by name, so cached answers always replay; and a "known campaign" input, the way Mixpanel asks teams for business context. Then a fresh held-out set, since fixes tuned on this one must be tested on cases they haven't seen. After that, the same benchmark run against vendor agents.</p>
+      <h3>What I learned</h3>
+      <ul>
+        <li>Real data fights back. Planted incidents are easy to find in synthetic data; in real data, true campaign shifts compete with them, and an agent that names a real change isn't simply wrong. A benchmark has to say what counts as the answer.</li>
+        <li>Measure the model, don't assume it. Once the evidence is computed well, rules made the same calls; the model's job became explanation.</li>
+        <li>Statistically real isn't the same as mattering. With tens of thousands of sessions, every small shift is "significant"; the rules that worked asked whether a segment diverged more than it usually does, got worse in absolute terms, and moved the metric asked about.</li>
+        <li>Check your own reporting. The false "zero typed numbers" claim came from my code, not the model.</li>
+      </ul>
+    </section>
+
+    <p class="cs-note">The data is Google's public, obfuscated GA4 demo export. The benchmark, generator and every model answer are in the repo, and every number comes from a logged run.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Akshay Dhar</span>
+      <a href="../index.html">Back to portfolio</a>
+    </div>
+  </footer>
+  <script src="../assets/js/page.js"></script>
+</body>
+</html>

@@ -47,6 +47,21 @@ window.CONTENT = {
   // Personal AI product projects: each has a PRD, a case study and the code
   projects: [
     {
+      title: "Why Did It Drop?",
+      badge: "Personal project · Oct 2026",
+      sub: "An analytics agent that explains why a product metric moved, and says when it can't. Code computes every number and checks tracking first; the model explains. Tested on 70 incidents planted in Google's real GA4 data, with every case published.",
+      stats: [
+        { num: "70", label: "test cases planted in real GA4 event data, frozen before any prompt" },
+        { num: "26 = 26", label: "development cases right, model versus fixed rules: the model added no decision value" },
+        { num: "Gate failed", label: "20% wrong causes on unseen cases (gate: 5%), mostly the data's own campaign shifts", warn: true }
+      ],
+      tags: ["LLM agents", "Product analytics", "Root-cause analysis", "Evals", "DuckDB", "GA4"],
+      caseStudy: "case-studies/why-did-it-drop.html",
+      demo: "https://akshaykumardhar.github.io/Why-Did-It-Drop/",
+      prd: "https://github.com/AKSHAYKUMARDHAR/Why-Did-It-Drop/blob/main/docs/PRD.md",
+      github: "https://github.com/AKSHAYKUMARDHAR/Why-Did-It-Drop"
+    },
+    {
       title: "RBI Circular Radar",
       badge: "Personal project · Oct 2026",
       sub: "A live digest for compliance teams: which new RBI notifications apply to your entity type, what to do and by when. Every claim is quoted with its page from RBI's own PDF, and anything code can't confirm says \"check\".",
