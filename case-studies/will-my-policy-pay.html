@@ -51,10 +51,10 @@
     </div>
 
     <div class="cs-stats">
-      <div class="pstat"><b>14</b><span>real policy documents from 10 insurers, frozen before any prompt</span></div>
+      <div class="pstat"><b>23</b><span>real policy documents from 15 insurers, each frozen in git before use</span></div>
       <div class="pstat"><b>8.2% → 1.2%</b><span>wrong facts on the dev set once code checks every quote (same model answers)</span></div>
-      <div class="pstat"><b>91%</b><span>of 152 facts right on 9 policies it had never seen, each quoted with its page</span></div>
-      <div class="pstat warn"><b>Blocked</b><span>by my own release gate: 3.3% wrong facts on those policies, bar 2%</span></div>
+      <div class="pstat"><b>25 / 25</b><span>hand-worked hospital bills matched by the simulator</span></div>
+      <div class="pstat warn"><b>Blocked twice</b><span>by my own release gate: wrong facts above the 2% bar on unseen policies, in both release runs</span></div>
     </div>
 
     <section class="cs-sec">
@@ -125,11 +125,22 @@
           <tr class="hl"><td>2 reads + checks · what ships</td><td>91.4%</td><td>3.3%</td><td>5.3%</td></tr>
         </tbody>
       </table></div>
+      <p>On review, 3 of release run 1's 5 wrong facts were mistakes in my answer key (more below), so I corrected the rules, moved those documents to development, and froze 9 fresh documents from 8 insurers for release run 2: 141 scored facts, 61 of them "not stated", labelled before any model read them, on the unchanged system. Google's servers failed the first document with "high demand" errors whose retries used up the day's free requests, so after 4 documents the result was already settled:</p>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Release run 2, first 4 of 9 documents (67 facts)</th><th>Correct</th><th>Wrong</th><th>Withheld</th></tr></thead>
+        <tbody>
+          <tr><td>1 read, no checks</td><td>86.6%</td><td>4.5%</td><td>9.0%</td></tr>
+          <tr><td>2 reads, no checks</td><td>89.6%</td><td>4.5%</td><td>6.0%</td></tr>
+          <tr class="hl"><td>2 reads + checks · what ships</td><td>80.6%</td><td>4.5%</td><td>14.9%</td></tr>
+        </tbody>
+      </table></div>
       <h3>Release gate</h3>
       <ul class="checklist">
         <li>Bill simulator matches all 25 hand-worked bills: 25 of 25</li>
-        <li class="fail">Wrong facts ≤ 2% of held-out facts: 5 of 152 (3.3%)</li>
-        <li>Correct ≥ 85% of held-out facts: 139 of 152 (91.4%)</li>
+        <li class="fail">Run 1, wrong facts ≤ 2%: 5 of 152 (3.3%)</li>
+        <li>Run 1, correct ≥ 85%: 139 of 152 (91.4%)</li>
+        <li class="fail">Run 2, wrong facts ≤ 2%: 3 in the first 4 documents, against 2 allowed for all 9</li>
+        <li class="fail">Run 2, correct ≥ 85%: 80.6% on the first 4 documents</li>
         <li>Every value shown is quoted and found on its cited page: all of them</li>
       </ul>
     </section>
@@ -138,12 +149,14 @@
       <h2>What failed, and what's next</h2>
       <div class="callout callout-amber"><strong>The checks cut wrong answers sevenfold, and at first they withheld a quarter of the card.</strong> Version 1 of the prompt let the model quote a heading or a definition instead of the line that sets the limit, so correct values failed verification. Version 2 asks for the words that set each value and lets the model join two passages with "...", each checked on its own; withheld facts fell from 25% to 7%.</div>
       <p style="margin-top:16px">The worst early error called ambulance cover "up to your sum insured" from a line that only said "Expenses incurred towards Ambulance". A "no limit" answer now needs words that say so. Version 3 still showed 3 wrong facts on the full dev set: two read "no co-payment" from sentences that only exempt some people (by entry age or city zone), and one took a ceiling shared by several covers as AYUSH's own limit. Two more code checks send such quotes to "check this yourself", which took wrong facts to zero on the same answers and cost one correct one. The smaller, cheaper models failed the bar: both read "1% of the sum insured or actual, whichever is lower" as a choice of two limits and called a premium discount a bonus. The model that passes allows 20 free requests a day, so ready-made cards are built from the evaluation's own readings and uploads are capped.</p>
-      <p><strong>The release run failed my own gate.</strong> On 9 policies it had never seen, 139 of 152 facts were right and 5 were wrong: 3.3% against a 2% bar. The score stands, because held-out labels never change after a run. On review, though, none of the 5 is a clear model error. Two joined a separate 90-day wait for diabetes, hypertension and heart conditions to the 24-month specific-illness clause: wider than my answer key, and real for a buyer with diabetes. Three were mistakes in my answer key, including HDFC's AYUSH limit, which I first reported as the model's worst error. The model had quoted the AYUSH row of the insurer's plan table ("Covered upto sum insured"), and my key had missed that table.</p>
-      <p>So version 2 changes the answer-key rules, not the system: those 9 documents join the dev set with the corrections logged, and the waiting-period definition covers every named-illness wait. On the 14 dev documents that gives 92.8% correct and 1 wrong fact (a 15-day COVID-19 wait the model leaves out). Release run 2 runs once on fresh documents, labelled under the new rules before any model reads them. Later: a second labeller, the policy schedule as a second upload (it sets the limits a wording leaves open), and scanned PDFs, which the tool currently turns away.</p>
+      <p><strong>Release run 1 failed my own gate.</strong> On 9 policies it had never seen, 139 of 152 facts were right and 5 were wrong: 3.3% against a 2% bar. The score stands, because held-out labels never change after a run. On review, though, none of the 5 is a clear model error. Two joined a separate 90-day wait for diabetes, hypertension and heart conditions to the 24-month specific-illness clause: wider than my answer key, and real for a buyer with diabetes. Three were mistakes in my answer key, including HDFC's AYUSH limit, which I first reported as the model's worst error. The model had quoted the AYUSH row of the insurer's plan table ("Covered upto sum insured"), and my key had missed that table.</p>
+      <p>So version 2 changed the answer-key rules, not the system, and <strong>release run 2 failed the gate on real errors.</strong> IFFCO Tokio's reinstatement, bought at the time of a claim, was shown as a 100% refill of cover. National's 20% co-payment in non-network hospitals was read as "no co-payment": the exemption mistake the dev checks catch for age and city zone, but not for "non-network". And Liberty's 90-day wait for listed critical illnesses was left out of the waiting periods; my key had its own miss there (a 24-month list on page 14), which stays logged rather than fixed. The other 5 documents are read the next day, from the same frozen system.</p>
+      <p>Next: an exemption check that covers network status, a check that an "optional" or "may opt" clause can't become a base-plan value, and then a third set of unseen documents, since a fix tuned on run 2 has to be tested on documents it hasn't seen. Later: a second labeller, the policy schedule as a second upload (it sets the limits a wording leaves open), and scanned PDFs, which the tool currently turns away.</p>
       <h3>What I learned</h3>
       <ul>
         <li>Verification is the product. The same two reads showed 7 wrong facts without the checks and 1 with them.</li>
-        <li>Check the answer key before blaming the model. Three of the release run's five "wrong" facts were my labelling mistakes, and the fix I first drafted for the AYUSH "error" would have cost 4 correct answers and caught nothing.</li>
+        <li>Check the answer key before blaming the model, and then check the model again. Three of release run 1's five "wrong" facts were my labelling mistakes, and the fix I first drafted for the AYUSH "error" would have cost 4 correct answers and caught nothing. Release run 2's three errors were real.</li>
+        <li>Outages cost quota. Google's "high demand" errors counted against the free daily limit, so the retry policy is part of the evaluation design: a document the provider never served is now left out of the scores, not counted as withheld.</li>
         <li>The labeller makes mistakes too. The model found a bonus clause I had missed (Bajaj, page 22); I corrected the dev key and logged it. Held-out labels never change after a run.</li>
         <li>Real documents beat hand-written test data: every hard case (tables, two-column pages, "whichever is lower") came from an insurer's own PDF.</li>
         <li>Free tiers shape evaluation plans: 20 requests a day decided the order of every run.</li>
