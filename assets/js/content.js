@@ -213,14 +213,16 @@ window.CONTENT = {
 
   skills: [
     { group: "AI product", items: [
-      ["Evaluation design: golden sets, held-out sets, release bars", "Catalysk, UPI agent, scam checker, policy explainer"],
+      ["Evaluation design: golden sets, held-out sets, release bars", "Catalysk, UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
+      ["Recall-first release gates", "RBI radar"],
+      ["Ablations and deterministic baselines", "RBI radar, metric-drop agent"],
       ["Confidence gating and human-in-the-loop", "Catalysk, UPI agent"],
       ["Abstention design: three-way verdicts, self-consistency", "Scam checker, policy explainer"],
-      ["Verified extraction: every answer quoted and checked in code", "Policy explainer"],
+      ["Verified extraction: every answer quoted and checked in code", "Policy explainer, RBI radar"],
       ["Model selection by bake-off", "Catalysk"],
       ["Agent guardrails and prompt-injection testing", "UPI agent, scam checker"],
-      ["Prompt design", "9fin, UPI agent, scam checker, policy explainer"],
-      ["PRDs and success metrics", "UPI agent, scam checker, policy explainer"],
+      ["Prompt design", "9fin, UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
+      ["PRDs and success metrics", "UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
       ["A/B test design with power analysis", "Scam checker"]
     ] },
     { group: "AI and ML", items: [
@@ -237,18 +239,22 @@ window.CONTENT = {
       ["Python (Pandas)", "all roles"],
       ["SQL / PostgreSQL", "Catalysk, 9fin"],
       ["PySpark", "BYJU'S"],
+      ["AWS", "Catalysk"],
       ["FastAPI", "UPI agent, scam checker, policy explainer"],
+      ["DuckDB", "Metric-drop agent"],
       ["n8n", "UPI agent"],
+      ["GitHub Actions", "RBI radar"],
       ["YAML config-driven pipelines", "Catalysk"],
       ["Git / GitHub", "all projects"]
     ] },
     { group: "AI tools", items: [
-      ["Claude Code", "UPI agent, scam checker, policy explainer and daily build work"],
+      ["Claude Code", "all five AI projects and daily build work"],
       ["Cursor", "build work"],
-      ["Gemini API", "9fin, UPI agent, scam checker, policy explainer"],
-      ["Anthropic API", "UPI agent"]
+      ["Gemini API", "9fin, UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
+      ["Anthropic API", "UPI agent, scam checker"]
     ] },
     { group: "Data and BI", items: [
+      ["Product analytics: funnels, segments, tracking checks (GA4)", "Metric-drop agent"],
       ["Metabase", "Catalysk, 9fin"],
       ["Power BI", "9fin, Energia"],
       ["Tableau", "Energia"],
@@ -257,6 +263,7 @@ window.CONTENT = {
     ] },
     { group: "Domains", items: [
       ["Fintech: UPI/VPA, bank transactions, institutional credit", "Catalysk, 9fin, UPI agent"],
+      ["RegTech: RBI notifications and compliance", "RBI radar"],
       ["Fraud and scam prevention in India", "Scam checker"],
       ["Health insurance in India: IRDAI claim rules", "Policy explainer"],
       ["ESG and sustainability", "Catalysk"],
