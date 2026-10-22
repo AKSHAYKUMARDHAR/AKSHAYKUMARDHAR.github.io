@@ -44,7 +44,7 @@
     });
   }
   function themeIcon() { return icon(root.getAttribute("data-theme") === "dark" ? "sun" : "moon"); }
-  function ext(href) { return /^https?:/.test(href) ? ' target="_blank" rel="noopener"' : ""; }
+  // Every link opens in the same tab: pop-up blockers (Poper Blocker, for one) silently drop target="_blank" links.
 
   /* ---------- Hero ---------- */
   function renderHero() {
@@ -59,8 +59,8 @@
     $("#heroCv").href = id.cv;
     $("#navCv").href = id.cv;
     $("#heroSocial").innerHTML =
-      '<a href="' + esc(id.github) + '" target="_blank" rel="noopener" aria-label="GitHub">' + icon("github") + "</a>" +
-      '<a href="' + esc(id.linkedin) + '" target="_blank" rel="noopener" aria-label="LinkedIn">' + icon("linkedin") + "</a>" +
+      '<a href="' + esc(id.github) + '" aria-label="GitHub">' + icon("github") + "</a>" +
+      '<a href="' + esc(id.linkedin) + '" aria-label="LinkedIn">' + icon("linkedin") + "</a>" +
       '<a href="mailto:' + esc(id.email) + '" aria-label="Email">' + icon("mail") + "</a>";
   }
 
@@ -103,7 +103,7 @@
         w.text.map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") +
         '<div class="plinks">' +
           '<a class="btn btn-primary" href="' + esc(w.caseStudy) + '">' + icon("book") + "Read the case study</a>" +
-          '<a class="btn btn-ghost" href="' + esc(w.pdf) + '" target="_blank" rel="noopener">' + icon("file") + "PDF</a>" +
+          '<a class="btn btn-ghost" href="' + esc(w.pdf) + '">' + icon("file") + "PDF</a>" +
         "</div></div>" +
         "<ul>" + w.highlights.map(function (h) { return "<li><b>" + esc(h.num) + "</b>" + esc(h.text) + "</li>"; }).join("") + "</ul>" +
       "</article>";
@@ -122,15 +122,15 @@
         '<div class="chips">' + p.tags.map(function (t) { return '<span class="chip">' + esc(t) + "</span>"; }).join("") + "</div>" +
         '<div class="plinks">' +
           '<a class="btn btn-primary btn-sm" href="' + esc(p.caseStudy) + '">' + icon("book") + "Case study</a>" +
-          '<a class="btn btn-ghost btn-sm" href="' + esc(p.prd) + '"' + ext(p.prd) + ">" + icon("file") + "PRD</a>" +
-          '<a class="btn btn-ghost btn-sm" href="' + esc(p.github) + '"' + ext(p.github) + ">" + icon("github") + "Code</a>" +
-          (p.demo ? '<a class="btn btn-ghost btn-sm" href="' + esc(p.demo) + '"' + ext(p.demo) + ">" + icon("external") + "Try it live</a>" : "") +
+          '<a class="btn btn-ghost btn-sm" href="' + esc(p.prd) + '">' + icon("file") + "PRD</a>" +
+          '<a class="btn btn-ghost btn-sm" href="' + esc(p.github) + '">' + icon("github") + "Code</a>" +
+          (p.demo ? '<a class="btn btn-ghost btn-sm" href="' + esc(p.demo) + '">' + icon("external") + "Try it live</a>" : "") +
         "</div></article>";
     }).join("");
     $("#earlierList").innerHTML = C.earlier.map(function (p) {
       return '<li><span class="t">' + esc(p.title) + '</span><span class="ctx">' + esc(p.context) + "</span>" +
         "<p>" + esc(p.text) + "</p>" +
-        '<a href="' + esc(p.link) + '" target="_blank" rel="noopener">' + icon("github") + "Code</a></li>";
+        '<a href="' + esc(p.link) + '">' + icon("github") + "Code</a></li>";
     }).join("");
   }
 
@@ -231,9 +231,9 @@
     a.href = "mailto:" + id.email;
     $("#copyEmail").addEventListener("click", copyEmail);
     $("#contactLinks").innerHTML =
-      '<a class="btn btn-ghost" href="' + esc(id.linkedin) + '" target="_blank" rel="noopener">' + icon("linkedin") + "LinkedIn</a>" +
-      '<a class="btn btn-ghost" href="' + esc(id.github) + '" target="_blank" rel="noopener">' + icon("github") + "GitHub</a>" +
-      '<a class="btn btn-primary" href="' + esc(id.cv) + '" target="_blank" rel="noopener">' + icon("download") + "Download CV</a>";
+      '<a class="btn btn-ghost" href="' + esc(id.linkedin) + '">' + icon("linkedin") + "LinkedIn</a>" +
+      '<a class="btn btn-ghost" href="' + esc(id.github) + '">' + icon("github") + "GitHub</a>" +
+      '<a class="btn btn-primary" href="' + esc(id.cv) + '" download>' + icon("download") + "Download CV</a>";
     $("#locationText").textContent = id.location;
     $("#year").textContent = String(new Date().getFullYear());
   }
