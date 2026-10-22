@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case study: Ship or Kill | Akshay Dhar</title>
+  <meta name="description" content="Case study: an A/B test readout that makes the call (roll out, iterate or kill) and shows its working, tested on 136 simulated couples-app experiments with known answers and two public experiments.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">AD</span><span class="brand-name">Akshay Dhar</span></a>
+      <div class="nav-actions push">
+        <a class="btn btn-ghost btn-sm" href="../index.html#projects">All projects</a>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle light and dark theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap cs-main">
+    <a class="cs-back" href="../index.html#projects">← Back to portfolio</a>
+    <p class="eyebrow">Case study · Personal project · Oct 2026</p>
+    <h1 class="cs-title">Ship or Kill</h1>
+    <p class="cs-sub">An A/B test readout that makes the call (roll out, iterate or kill) and shows its working. Tested on 136 simulated couples-app experiments with known answers, and on two public experiments.</p>
+    <p class="print-only muted-sm">Akshay Dhar · akshaykumardhar14@gmail.com · github.com/AKSHAYKUMARDHAR/Ship-or-Kill</p>
+
+    <div class="cs-links">
+      <a class="btn btn-primary btn-sm" href="https://akshaykumardhar.github.io/Ship-or-Kill/" target="_blank" rel="noopener">Open the tool</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Ship-or-Kill/blob/main/docs/PRD.md" target="_blank" rel="noopener">Read the PRD</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Ship-or-Kill/blob/main/docs/TEST_PLAN_EXAMPLE.md" target="_blank" rel="noopener">Example test plan</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/AKSHAYKUMARDHAR/Ship-or-Kill" target="_blank" rel="noopener">Code on GitHub</a>
+      <a class="btn btn-ghost btn-sm" href="../assets/files/case-study-ship-or-kill.pdf" target="_blank" rel="noopener">Download PDF</a>
+    </div>
+
+    <div class="card cs-meta">
+      <div><h4>My role</h4><p>Solo: research, PRD, benchmark design, statistics, evaluation and the build, with Claude Code.</p></div>
+      <div><h4>When</h4><p>Oct 2026</p></div>
+      <div><h4>Stack</h4><p>JavaScript (no dependencies), Python, NumPy, SciPy, DuckDB SQL, GitHub Pages</p></div>
+    </div>
+
+    <div class="cs-stats">
+      <div class="pstat"><b>0 / 64</b><span>non-winning variants rolled out on the held-out run; the usual "p &lt; 0.05" rule rolled out 39</span></div>
+      <div class="pstat"><b>24 / 24</b><span>broken tests stopped before reading results: sample ratio bugs, tracking bugs, split couples</span></div>
+      <div class="pstat"><b>4x</b><span>the sample an onboarding test needs once guardrails are sized for, not just the primary</span></div>
+      <div class="pstat warn"><b>7 / 16</b><span>real winners held back, against 2 for the usual rule: the hypothesis's cost limit was missed</span></div>
+    </div>
+
+    <section class="cs-sec">
+      <h2>The problem</h2>
+      <p>A test ends and someone has to say roll out, iterate or kill. The numbers rarely agree with each other: D1 retention is up 6%, D0 activation is down 4% at p = 0.08, one platform looks odd, and the test was planned for another week. Most teams decide on the primary metric's p-value and argue about the rest. Four mistakes recur:</p>
+      <ul>
+        <li><strong>Broken data looks like a result.</strong> About 6% of Microsoft's experiments had a sample ratio mismatch (Fabijan et al., KDD 2019). A variant that crashes before exposure is logged loses its weakest users and looks better than it is.</li>
+        <li><strong>Peeking turns noise into wins.</strong> In 1,000 A/A tests at Wish, stopping at the first p &lt; 0.05 gave about 21% false positives, against 4.7% at the planned size.</li>
+        <li><strong>Conditional metrics reward filtering.</strong> Add friction to onboarding and retention "of activated users" rises on its own, even when fewer users are retained in total.</li>
+        <li><strong>"Not significantly worse" isn't "not worse".</strong> GrowthBook's decision framework example ships "unless any guardrail metrics are statistically significant and negative". That passes any harm the test is too small to see.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>The PM at an early-stage consumer app</strong> on PostHog or Mixpanel with no experimentation platform, who needs a call they can defend to the founder.</li>
+        <li><strong>The founder reviewing a readout</strong>, who wants to see what was checked before "it won".</li>
+        <li><strong>The PM planning a test</strong>, who needs to know how many users and days it takes to detect the lift and also rule out harm.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What I built</h2>
+      <p>A free web page that takes per-arm counts, not a platform. It reads a test in a fixed order and writes the call with its reasons and the next step. It also has a planner that sizes a test for every check, and a SQL template that turns PostHog-style events into the counts. The engine is one dependency-free JavaScript file: the page runs the same file the benchmark scored.</p>
+      <div class="flow">
+        <div class="flow-step k-gate"><b>Trust</b><small>sample ratio overall and by segment; tracking audits</small></div>
+        <div class="flow-step"><b>Done?</b><small>no early wins; early kill only for clear harm</small></div>
+        <div class="flow-step k-agent"><b>Primary, per user</b><small>95% interval; subset metrics re-based</small></div>
+        <div class="flow-step k-agent"><b>Guardrails</b><small>non-inferiority against agreed margins</small></div>
+        <div class="flow-step k-ok"><b>The call</b><small>roll out, iterate, kill, or fix the data</small></div>
+      </div>
+      <div class="shot">
+        <img src="../assets/img/ship-readout.png" alt="The readout on the interview question: D1 retention of activated couples up 6%, activation down 4%. The call is iterate: per installer, D1 can't be told from zero, and the activation drop can't be ruled out" loading="lazy">
+        <img src="../assets/img/ship-planner.png" alt="The planner: a standard calculator says 7,550 users per arm; sized for every guardrail the test needs 31,565 per arm, set by the D1 retention guardrail" loading="lazy">
+        <img src="../assets/img/ship-benchmark.png" alt="The benchmark tab: held-out results against the usual rule and the rule with a guardrail veto, and results by case type" loading="lazy">
+      </div>
+    </section>
+
+    <section class="cs-sec">
+      <h2>Product decisions</h2>
+      <ul>
+        <li><strong>Counts in, call out.</strong> The page works with any analytics stack. Nothing leaves the browser, so no data-sharing approval is needed to try it.</li>
+        <li><strong>Trust before results.</strong> A failed sample ratio or tracking audit blocks the call. "Fix the data first" is a valid outcome, and it names where to look.</li>
+        <li><strong>Per assigned user, always.</strong> A primary measured on a subset chosen after assignment is replaced by its per-user version.</li>
+        <li><strong>Non-inferiority guardrails.</strong> A guardrail passes only when the test rules out harm beyond the margin agreed before it started. This is the rule in Spotify's "Risk-aware product decisions in A/B tests with multiple metrics" (2024).</li>
+        <li><strong>Couples-specific checks.</strong> The unit is the couple: the invitee inherits the inviter's variant through the invite token. A partner landing in the other arm is a tracking audit.</li>
+        <li><strong>Every call has a next step.</strong> Each one says what to do next: how many users to extend by, what to change, or what to check.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>How I tested it</h2>
+      <p><strong>The hypothesis, written in the PRD before any test case existed:</strong></p>
+      <ul>
+        <li>The usual rule (ship if the registered primary is up with p &lt; 0.05) ships at least 20% of variants that aren't real winners.</li>
+        <li>Ship or Kill ships at most 5%.</li>
+        <li>Its caution costs at most 15 percentage points more of the real winners.</li>
+      </ul>
+      <p>I built a couples-app simulator at the level of raw events. Each installer has a latent commitment and moves through onboarding, partner invite, partner joined and first shared game, then D1 and D7 opens, push disables, crashes and uninstalls. The simulator writes PostHog-style event logs with realistic event loss, and the readout counts come from the SQL template. True effects are computed exactly from the model, not from the sample.</p>
+      <p>That gives 136 tests across eleven case types:</p>
+      <ul>
+        <li>clean wins, nulls and losses;</li>
+        <li>an onboarding gate that filters out less committed users (the denominator trap);</li>
+        <li>a bedtime-push change that lifts D1 but drives push disables and uninstalls;</li>
+        <li>a crash before exposure on old Android (sample ratio bug);</li>
+        <li>a solo game firing the shared-game event (tracking bug);</li>
+        <li>peeked nulls;</li>
+        <li>three types held out only: harm just past a margin, couples randomised one partner at a time, and underpowered winners.</li>
+      </ul>
+      <p>All 136 were frozen in git before any engine code existed: 48 for development, 88 held out and run once.</p>
+      <div class="table-wrap"><table class="res-table">
+        <thead><tr><th>Held-out release run (88 cases), run once</th><th>Ship or Kill</th><th>Usual rule</th><th>Usual rule + guardrail veto</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>Non-winners rolled out</td><td>0 / 64</td><td>39 / 64</td><td>19 / 64</td></tr>
+          <tr><td>Harmful variants rolled out</td><td>0 / 48</td><td>31 / 48</td><td>11 / 48</td></tr>
+          <tr class="hl"><td>Broken tests caught</td><td>24 / 24</td><td>0 / 24</td><td>0 / 24</td></tr>
+          <tr><td>False data alarms</td><td>0 / 64</td><td>0 / 64</td><td>0 / 64</td></tr>
+          <tr><td>Real winners killed</td><td>0 / 24</td><td>0 / 24</td><td>0 / 24</td></tr>
+          <tr><td>Real winners held back (clean data)</td><td>7 / 16</td><td>2 / 16</td><td>2 / 16</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Release gate and hypothesis</h3>
+      <ul class="checklist">
+        <li>Wrong roll-outs ≤ 5% of non-winners: 0 of 64</li>
+        <li>Data problems caught ≥ 90%: 24 of 24</li>
+        <li>False data alarms ≤ 5%: 0 of 64</li>
+        <li>Winners killed ≤ 5%: 0 of 24</li>
+        <li>Usual rule ships ≥ 20% of non-winners: 61%</li>
+        <li class="fail">Caution costs ≤ 15 points of real winners: it cost 31 (44% held back against 13%)</li>
+      </ul>
+      <h3>Two public experiments</h3>
+      <ul>
+        <li><strong>Cookie Cats</strong>: a real mobile-game test, 90,189 players, first gate at level 40 instead of 30. <strong>Kill</strong>: D7 retention fell 0.82 points (95% CI -1.3 to -0.31). It also flags a borderline sample ratio (p = 0.0086), to check before trusting the size of the effect.</li>
+        <li><strong>Udacity free-trial screener</strong>: a course dataset. <strong>Iterate</strong>: enrolments fell as intended, but the test can't rule out losing paying students beyond the course's own 0.75-point boundary. Payments <em>per enrolment</em> rose 3.1 points, the same conditional-metric pattern as the interview question below.</li>
+      </ul>
+    </section>
+
+    <section class="cs-sec">
+      <h2>What failed, and what's next</h2>
+      <div class="callout callout-amber"><strong>My hypothesis underestimated the cost of caution.</strong> Ship or Kill held back 7 of 16 real winners, against 2 for the usual rule. Five of the seven had the same cause: a guardrail, usually crashes at about 2%, that a test sized for its primary metric can't rule out. Development showed it first. I didn't loosen the rule to win those back: that would have shipped harm just past the margin, which the held-out set tested and the significance rule failed (3 of 8 shipped).</div>
+      <p style="margin-top:16px">The fix is in planning, not the readout. Spotify's paper reaches the same conclusion: with non-inferiority guardrails, power must cover every check. The planner now gives each check an equal share of the miss rate. For an onboarding test with an 8% minimum effect, a standard calculator says 7,550 users per arm. With a D1 guardrail at a -4% margin the test needs 31,565, and at -6% it needs 14,029. The example test plan makes that trade-off explicitly.</p>
+      <p>The same design holds up on the interview question that started this project: D1 retention +6%, D0 activation -4% at p = 0.08. If D1 was measured on activated couples, it's the denominator trap: per installer, D1 is +0.44 points and can't be told from zero. If D1 was per installer, it's a real win, but the activation harm can't be ruled out. Both readings say iterate, for different reasons, while the usual rule says roll out to both.</p>
+      <p>Next: sequential testing (always-valid intervals) so teams can look daily without inflating false wins; CUPED variance reduction from pre-period activity; reading counts straight from PostHog's query API.</p>
+      <h3>What I learned</h3>
+      <ul>
+        <li>Most of the value was in the boring checks. Sample ratio and tracking audits stopped 24 broken tests that every p-value rule would have read as results.</li>
+        <li>Rules have a cost, and it has to be measured. "Never ship harm" is easy to promise; the benchmark showed what it costs in held-back winners, and that the real fix is sizing tests for their guardrails.</li>
+        <li>Couples apps need couple-level randomisation. Randomising partners separately diluted real effects by about half, and the usual rule still shipped 5 of 8 of those tests on the diluted numbers.</li>
+        <li>A simulator is only as honest as its separation from the code it tests. The benchmark was frozen before the engine existed, three case types were held out, and the public experiments are reported separately.</li>
+      </ul>
+    </section>
+
+    <p class="cs-note">The benchmark is simulated: the base rates are illustrative, not any company's data, and the case mix is chosen, not observed. Every number above comes from a logged run in the repo, and the held-out run used the engine frozen at commit e81e1d7.</p>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Akshay Dhar</span>
+      <a href="../index.html">Back to portfolio</a>
+    </div>
+  </footer>
+  <script src="../assets/js/page.js"></script>
+</body>
+</html>

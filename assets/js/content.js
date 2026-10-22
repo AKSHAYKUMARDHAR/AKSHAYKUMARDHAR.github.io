@@ -47,6 +47,21 @@ window.CONTENT = {
   // Personal AI product projects: each has a PRD, a case study and the code
   projects: [
     {
+      title: "Ship or Kill",
+      badge: "Personal project · Oct 2026",
+      sub: "An A/B test readout that makes the call (roll out, iterate or kill) and shows its working. It checks the data before the results, refuses to call a test early, reads metrics per assigned user, and only passes a guardrail when the test rules out harm. Tested on 136 simulated couples-app experiments with known answers.",
+      stats: [
+        { num: "0 / 64", label: "non-winning variants rolled out on unseen cases; the usual \"p < 0.05\" rule rolled out 39" },
+        { num: "24 / 24", label: "broken tests caught before reading results: sample ratio, tracking, split couples" },
+        { num: "7 / 16", label: "real winners held back, against 2 for the usual rule: the cost of caution was higher than I predicted", warn: true }
+      ],
+      tags: ["Experimentation", "A/B testing", "Statistics", "Product analytics", "SQL", "Consumer apps"],
+      caseStudy: "case-studies/ship-or-kill.html",
+      demo: "https://akshaykumardhar.github.io/Ship-or-Kill/",
+      prd: "https://github.com/AKSHAYKUMARDHAR/Ship-or-Kill/blob/main/docs/PRD.md",
+      github: "https://github.com/AKSHAYKUMARDHAR/Ship-or-Kill"
+    },
+    {
       title: "Why Did It Drop?",
       badge: "Personal project · Oct 2026",
       sub: "An analytics agent that explains why a product metric moved, and says when it can't. Code computes every number and checks tracking first; the model explains. Tested on 70 incidents planted in Google's real GA4 data, with every case published.",
@@ -213,7 +228,7 @@ window.CONTENT = {
 
   skills: [
     { group: "AI product", items: [
-      ["Evaluation design: golden sets, held-out sets, release bars", "Catalysk, UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
+      ["Evaluation design: golden sets, held-out sets, release bars", "Catalysk, UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent, Ship or Kill"],
       ["Recall-first release gates", "RBI radar"],
       ["Ablations and deterministic baselines", "RBI radar, metric-drop agent"],
       ["Confidence gating and human-in-the-loop", "Catalysk, UPI agent"],
@@ -222,8 +237,9 @@ window.CONTENT = {
       ["Model selection by bake-off", "Catalysk"],
       ["Agent guardrails and prompt-injection testing", "UPI agent, scam checker"],
       ["Prompt design", "9fin, UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
-      ["PRDs and success metrics", "UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
-      ["A/B test design with power analysis", "Scam checker"]
+      ["PRDs and success metrics", "UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent, Ship or Kill"],
+      ["A/B test design with power analysis", "Scam checker, Ship or Kill"],
+      ["Experiment readouts: sample ratio checks, non-inferiority guardrails, decision rules", "Ship or Kill"]
     ] },
     { group: "AI and ML", items: [
       ["LLM agents and tool calling", "UPI agent"],
@@ -241,20 +257,22 @@ window.CONTENT = {
       ["PySpark", "BYJU'S"],
       ["AWS", "Catalysk"],
       ["FastAPI", "UPI agent, scam checker, policy explainer"],
-      ["DuckDB", "Metric-drop agent"],
+      ["DuckDB", "Metric-drop agent, Ship or Kill"],
+      ["JavaScript: dependency-free web tools", "Ship or Kill"],
       ["n8n", "UPI agent"],
       ["GitHub Actions", "RBI radar"],
       ["YAML config-driven pipelines", "Catalysk"],
       ["Git / GitHub", "all projects"]
     ] },
     { group: "AI tools", items: [
-      ["Claude Code", "all five AI projects and daily build work"],
+      ["Claude Code", "all six projects and daily build work"],
       ["Cursor", "build work"],
       ["Gemini API", "9fin, UPI agent, scam checker, policy explainer, RBI radar, metric-drop agent"],
       ["Anthropic API", "UPI agent, scam checker"]
     ] },
     { group: "Data and BI", items: [
       ["Product analytics: funnels, segments, tracking checks (GA4)", "Metric-drop agent"],
+      ["Retention and activation metrics: D0, D1, D7, cohort maturity", "Ship or Kill"],
       ["Metabase", "Catalysk, 9fin"],
       ["Power BI", "9fin, Energia"],
       ["Tableau", "Energia"],
@@ -265,6 +283,7 @@ window.CONTENT = {
       ["Fintech: UPI/VPA, bank transactions, institutional credit", "Catalysk, 9fin, UPI agent"],
       ["RegTech: RBI notifications and compliance", "RBI radar"],
       ["Fraud and scam prevention in India", "Scam checker"],
+      ["Consumer apps: onboarding, invite flows, push notifications", "Ship or Kill"],
       ["Health insurance in India: IRDAI claim rules", "Policy explainer"],
       ["ESG and sustainability", "Catalysk"],
       ["Energy", "Energia"],

@@ -12,6 +12,7 @@ Personal portfolio of Akshay Dhar, AI Product Manager. A plain static site: HTML
   - `will-my-policy-pay.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/Will-My-Policy-Pay/blob/main/docs/PRD.md) and [live demo](https://will-my-policy-pay.onrender.com)
   - `rbi-circular-radar.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/RBI-Circular-Radar/blob/main/docs/PRD.md) and [live digest](https://akshaykumardhar.github.io/RBI-Circular-Radar/)
   - `why-did-it-drop.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/Why-Did-It-Drop/blob/main/docs/PRD.md) and [benchmark explorer](https://akshaykumardhar.github.io/Why-Did-It-Drop/)
+  - `ship-or-kill.html`: personal project, with its [PRD](https://github.com/AKSHAYKUMARDHAR/Ship-or-Kill/blob/main/docs/PRD.md) and [live tool](https://akshaykumardhar.github.io/Ship-or-Kill/)
 
 ## Edit content
 
